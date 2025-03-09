@@ -1,0 +1,60 @@
+﻿@model JamesThewProject.Models.Announcement
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Create Announcement";
+}
+
+<h1>Create Announcement</h1>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form action="/Announcement/Create" method="post" enctype="multipart/form-data" id="createAnnouncementForm">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" id="Title" name="Title" class="form-control" required />
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" class="form-control" rows="4" required></textarea>
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Không có phần nhập ngày vì PostedDate được set từ controller -->
+
+    <div class="form-group">
+        <label for="IsDisplayed">Display Status</label>
+        <select id="IsDisplayed" name="IsDisplayed" class="form-control">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.IsDisplayed, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="ImageFile">Upload Image</label>
+        <input type="file" id="ImageFile" name="ImageFile" class="form-control-file" accept="image/*" />
+        @Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Create Announcement</button>
+    <a href="/Announcement/ManageAnnouncements" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('createAnnouncementForm').addEventListener('submit', function (e) {
+            var imageInput = document.getElementById('ImageFile');
+            if (imageInput.files.length === 0) {
+                e.preventDefault();
+                alert("Please upload an image.");
+                imageInput.focus();
+                return false;
+            }
+        });
+    </script>
+}

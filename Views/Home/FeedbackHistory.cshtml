@@ -1,0 +1,128 @@
+﻿@model JamesThewProject.Models.FeedbackViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Feedback History";
+    var query = Context.Request.Query;
+}
+
+<div class="feedback-container">
+    <h2 class="section-title">My Feedback History</h2>
+
+    @* <!-- Search and Sort Form --> *@
+    @* <form method="get" action="@Url.Action("List", "Announcement")" class="mb-4"> *@
+    @*     <div class="form-group"> *@
+    @*         <input type="text" name="searchString" value="@query["searchString"]" placeholder="Search announcements..." class="form-control" /> *@
+    @*     </div> *@
+    @*     <div class="form-group mt-2"> *@
+    @*         <select name="sortOrder" class="form-control"> *@
+    @*             <option value="">Sort by</option> *@
+    @*             <option value="title_asc" @(query["sortOrder"] == "title_asc" ? "selected" : "")>Title (A-Z)</option> *@
+    @*             <option value="title_desc" @(query["sortOrder"] == "title_desc" ? "selected" : "")>Title (Z-A)</option> *@
+    @*             <option value="date_asc" @(query["sortOrder"] == "date_asc" ? "selected" : "")>Date (Oldest first)</option> *@
+    @*             <option value="date_desc" @(query["sortOrder"] == "date_desc" ? "selected" : "")>Date (Newest first)</option> *@
+    @*         </select> *@
+    @*     </div> *@
+    @*     <button type="submit" class="btn btn-primary mt-2">Search</button> *@
+    @* </form> *@
+
+    @if (Model.Feedbacks.Any())
+    {
+        <table class="table feedback-table mt-4">
+            <thead>
+                <tr>
+                    <th>Feedback</th>
+                    <th>Response</th>
+                    <th>Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var fb in Model.Feedbacks)
+                {
+                    <tr>
+                        <td>@fb.Content</td>
+                        <td>
+                            @if (!string.IsNullOrWhiteSpace(fb.Response))
+                            {
+                                var responses = fb.Response.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var line in responses)
+                                {
+                                    <div class="response-text">@line</div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="no-response">No response yet.</div>
+                            }
+                        </td>
+                        <td>@fb.CreatedAt.ToString("HH:mm  dd/MM/yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-feedback">No announcements available.</p>
+    }
+</div>
+
+<style>
+    /* Container chính */
+    .feedback-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tiêu đề trang */
+    .section-title {
+        text-align: center;
+        font-weight: bold;
+        color: #C0392B; /* Màu đỏ sẫm */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #2980B9; /* Màu xanh dương */
+        padding-bottom: 10px;
+        font-size: 32px;
+        text-transform: uppercase;
+    }
+
+    /* Bảng Feedback */
+    .feedback-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .feedback-table th, .feedback-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .feedback-table th {
+            background: linear-gradient(45deg, #2980B9, #3498DB); /* Gradient xanh dương */
+            color: #fff;
+            font-weight: bold;
+        }
+
+    /* Phần response text */
+    .response-text {
+        font-style: italic;
+        color: #555;
+    }
+
+    .no-response {
+        color: #aaa;
+        font-style: italic;
+    }
+
+    .no-feedback {
+        text-align: center;
+        font-size: 16px;
+        color: #888;
+        margin-top: 20px;
+        font-style: italic;
+    }
+</style>

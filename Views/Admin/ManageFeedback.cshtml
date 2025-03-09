@@ -1,0 +1,78 @@
+﻿@model IEnumerable<JamesThewProject.Models.Feedback>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Manage Feedback";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var query = Context.Request.Query;
+}
+
+<div class="container mt-4">
+    <h2>Manage Feedback</h2>
+
+    <!-- Form Search & Sort -->
+    <form method="get" action="@Url.Action("ManageFeedback", "Admin")" class="mb-3">
+        <div class="form-group">
+            <input type="text" name="searchString" value="@(query["searchString"])" placeholder="Search feedback..." class="form-control" />
+        </div>
+        <div class="form-group mt-2">
+            <select name="sortOrder" class="form-control">
+                <option value="">Sort by</option>
+                <option value="email_asc" @(query["sortOrder"] == "email_asc" ? "selected" : "")>User Email (A-Z)</option>
+                <option value="email_desc" @(query["sortOrder"] == "email_desc" ? "selected" : "")>User Email (Z-A)</option>
+                <option value="date_asc" @(query["sortOrder"] == "date_asc" ? "selected" : "")>Submitted Date (Oldest first)</option>
+                <option value="date_desc" @(query["sortOrder"] == "date_desc" ? "selected" : "")>Submitted Date (Newest first)</option>
+                <option value="status_asc" @(query["sortOrder"] == "status_asc" ? "selected" : "")>Status (Unread first)</option>
+                <option value="status_desc" @(query["sortOrder"] == "status_desc" ? "selected" : "")>Status (Read first)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Feedback</th>
+                <th>Response</th>
+                <th>Status</th>
+                <th>Submitted At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var fb in Model)
+                {
+                    <tr>
+                        <td>@fb.User?.Email</td>
+                        <td>@fb.Content</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(fb.Response))
+                            {
+                                var lines = fb.Response.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var line in lines)
+                                {
+                                    <div>@line</div>
+                                }
+                            }
+                        </td>
+                        <td>@(fb.IsRead ? "Read" : "Unread")</td>
+                        <td>@fb.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href='@Url.Action("ReplyFeedback", "Admin", new { id = fb.FeedbackId })'>Reply</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No feedback found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

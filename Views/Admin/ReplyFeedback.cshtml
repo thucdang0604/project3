@@ -1,0 +1,60 @@
+﻿@model JamesThewProject.Models.Feedback
+
+@{
+    ViewData["Title"] = "Reply to Feedback";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Reply to Feedback</h2>
+
+    <!-- Email của user gửi feedback -->
+    <div class="mb-3">
+        <label class="form-label">User Email:</label>
+        <input type="text" class="form-control" value="@Model.User?.Email" readonly />
+    </div>
+
+    <!-- Nội dung gốc của feedback -->
+    <div class="mb-3">
+        <label class="form-label">Feedback:</label>
+        <textarea class="form-control" rows="3" readonly>@Model.Content</textarea>
+    </div>
+
+    <!-- Hiển thị các phản hồi cũ (Response) trên nhiều dòng, nếu có -->
+    <div class="mb-3">
+        <label class="form-label">Previous Responses:</label>
+        @if (!string.IsNullOrEmpty(Model.Response))
+        {
+            var lines = Model.Response.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                <div>@line</div>
+            }
+        }
+        else
+        {
+            <div>No previous response.</div>
+        }
+    </div>
+
+    <!-- Form gửi phản hồi mới -->
+    <form asp-action="ReplyFeedback" method="post">
+        <!-- Hidden field để gửi FeedbackId -->
+        <input type="hidden" id="FeedbackId" name="FeedbackId" value="@Model.FeedbackId" />
+
+
+        <div class="mb-3">
+            <label for="Response" class="form-label">New Response</label>
+            <textarea id="Response" name="Response" class="form-control" rows="3" placeholder="Type your response here" required></textarea>
+            <!-- Nếu bạn muốn validation, có thể dùng Tag Helper asp-validation-for -->
+            <span asp-validation-for="Response" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Send Response</button>
+        <a href="@Url.Action("ManageFeedback", "Admin")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

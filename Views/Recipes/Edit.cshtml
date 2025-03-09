@@ -1,0 +1,283 @@
+﻿@model JamesThewProject.Models.CreateOrEditRecipeViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Recipe";
+    // Lấy cờ lockFields từ ViewBag (true nếu không phải chủ sở hữu)
+    bool lockFields = ViewBag.LockFields as bool? ?? false;
+}
+
+@using Newtonsoft.Json
+@{
+    var availableIngredientsJson = JsonConvert.SerializeObject(Model.AvailableIngredients);
+}
+<script>
+    var availableIngredients = @Html.Raw(availableIngredientsJson);
+</script>
+
+<div class="container mt-4">
+    <h2>Edit Recipe</h2>
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @using (Html.BeginForm("Edit", "Recipes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.RecipeId)
+
+        <!-- Title (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            @if (lockFields)
+            {
+                <input type="text" class="form-control" value="@Model.Title" disabled />
+                <input type="hidden" name="Title" value="@Model.Title" />
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            }
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Description (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            @if (lockFields)
+            {
+                <textarea class="form-control" rows="4" disabled>@Model.Description</textarea>
+                <input type="hidden" name="Description" value="@Model.Description" />
+            }
+            else
+            {
+                @Html.TextAreaFor(m => m.Description, 4, 50, new { @class = "form-control" })
+            }
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Instructions (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label for="Instructions" class="form-label">Instructions</label>
+            @if (lockFields)
+            {
+                <textarea class="form-control" rows="4" disabled>@Model.Instructions</textarea>
+                <input type="hidden" name="Instructions" value="@Model.Instructions" />
+            }
+            else
+            {
+                @Html.TextAreaFor(m => m.Instructions, 4, 50, new { @class = "form-control" })
+            }
+            @Html.ValidationMessageFor(m => m.Instructions, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Servings (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label for="Servings" class="form-label">Servings (Number of People)</label>
+            @if (lockFields)
+            {
+                <select class="form-control" disabled>
+                    @for (int i = 1; i <= 20; i++)
+                    {
+                        <option value="@i" @(i == Model.Servings ? "selected" : "")>@i</option>
+                    }
+                </select>
+                <input type="hidden" name="Servings" value="@Model.Servings" />
+            }
+            else
+            {
+                <select name="Servings" class="form-control">
+                    @for (int i = 1; i <= 20; i++)
+                    {
+                        <option value="@i" @(i == Model.Servings ? "selected" : "")>@i</option>
+                    }
+                </select>
+            }
+            @Html.ValidationMessageFor(m => m.Servings, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- IsPremium (LUÔN MỞ) -->
+        <div class="mb-3">
+            <label for="IsPremium" class="form-label">Is Premium?</label>
+            @Html.DropDownListFor(m => m.IsPremium,
+                     new SelectList(new[] {
+        new { Value = "false", Text = "No" },
+        new { Value = "true", Text = "Yes" }
+        }, "Value", "Text", Model.IsPremium.ToString().ToLower()),
+                     new { @class = "form-control" }
+                     )
+            @Html.ValidationMessageFor(m => m.IsPremium, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Image (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label for="ImageFile" class="form-label">Recipe Image</label>
+            @if (lockFields)
+            {
+                <input type="file" class="form-control" disabled />
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.ImageFile, new { @class = "form-control", type = "file", accept = "image/*" })
+            }
+            @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "text-danger" })
+
+            @if (!string.IsNullOrEmpty(Model.ExistingImageUrl))
+            {
+                <div class="mt-2">
+                    <img src="@Model.ExistingImageUrl" alt="Current Recipe Image" style="max-width: 200px;" />
+                </div>
+            }
+        </div>
+
+        <!-- Ingredients (KHÓA nếu không phải chủ sở hữu) -->
+        <div class="mb-3">
+            <label class="form-label">Ingredients</label>
+            <table class="table" id="ingredientTable">
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Quantity</th>
+                        @if (!lockFields)
+                        {
+                            <th>Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.SelectedIngredients != null && Model.SelectedIngredients.Count > 0)
+                    {
+                        for (int i = 0; i < Model.SelectedIngredients.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @if (lockFields)
+                                    {
+                                        <select class="form-control" disabled>
+                                            <option value="">-- Select --</option>
+                                            @foreach (var ing in Model.AvailableIngredients)
+                                            {
+                                                <option value="@ing.IngredientId" @(ing.IngredientId == Model.SelectedIngredients[i].IngredientId ? "selected" : "")>
+                                                    @ing.Name (@ing.DefaultUnit)
+                                                </option>
+                                            }
+                                        </select>
+                                        <input type="hidden" name="SelectedIngredients[@i].IngredientId" value="@Model.SelectedIngredients[i].IngredientId" />
+                                    }
+                                    else
+                                    {
+                                        <select id="@("SelectedIngredients_" + i + "__IngredientId")"
+                                                name="SelectedIngredients[@i].IngredientId"
+                                                class="form-control" required>
+                                            <option value="">-- Select --</option>
+                                            @foreach (var ing in Model.AvailableIngredients)
+                                            {
+                                                <option value="@ing.IngredientId" @(ing.IngredientId == Model.SelectedIngredients[i].IngredientId ? "selected" : "")>
+                                                    @ing.Name (@ing.DefaultUnit)
+                                                </option>
+                                            }
+                                        </select>
+                                    }
+                                    @Html.ValidationMessage($"SelectedIngredients[{i}].IngredientId", "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @if (lockFields)
+                                    {
+                                        <input type="number" class="form-control" value="@Model.SelectedIngredients[i].Quantity" disabled />
+                                        <input type="hidden" name="SelectedIngredients[@i].Quantity" value="@Model.SelectedIngredients[i].Quantity" />
+                                    }
+                                    else
+                                    {
+                                        <input type="number"
+                                               id="@("SelectedIngredients_" + i + "__Quantity")"
+                                               name="SelectedIngredients[@i].Quantity"
+                                               class="form-control"
+                                               placeholder="e.g., 200"
+                                               value="@Model.SelectedIngredients[i].Quantity"
+                                               min="1" required />
+                                    }
+                                    @Html.ValidationMessage($"SelectedIngredients[{i}].Quantity", "", new { @class = "text-danger" })
+                                </td>
+                                @if (!lockFields)
+                                {
+                                    <td>
+                                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @if (!lockFields)
+            {
+                <button type="button" class="btn btn-secondary" onclick="addRow()">Add Ingredient</button>
+            }
+            @Html.ValidationMessageFor(m => m.SelectedIngredients, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- IsHidden (LUÔN MỞ) -->
+        <div class="mb-3">
+            <label for="IsHidden" class="form-label">Display Recipe?</label>
+            <select id="IsHidden" name="IsHidden" class="form-control">
+                <option value="false" @(!Model.IsHidden ? "selected" : "")>Show</option>
+                <option value="true" @(Model.IsHidden ? "selected" : "")>Hide</option>
+            </select>
+            @Html.ValidationMessageFor(m => m.IsHidden, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Changes</button>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var lockFields = '@(lockFields.ToString().ToLower())'; // "true" hoặc "false"
+
+        function addRow() {
+            if (lockFields === 'true') return;
+            var tableBody = document.getElementById("ingredientTable").getElementsByTagName("tbody")[0];
+            var rowCount = tableBody.rows.length;
+            var newRow = tableBody.insertRow(rowCount);
+
+            var selectHtml = '<select id="SelectedIngredients_' + rowCount + '__IngredientId"'
+                           + ' name="SelectedIngredients[' + rowCount + '].IngredientId"'
+                           + ' class="form-control" required>'
+                           + '<option value="">-- Select --</option>';
+            for (var i = 0; i < availableIngredients.length; i++) {
+                var ing = availableIngredients[i];
+                selectHtml += '<option value="' + ing.IngredientId + '">' + ing.Name + ' (' + ing.DefaultUnit + ')</option>';
+            }
+            selectHtml += '</select>';
+
+            var inputHtml = '<input type="number" id="SelectedIngredients_' + rowCount + '__Quantity"'
+                          + ' name="SelectedIngredients[' + rowCount + '].Quantity"'
+                          + ' class="form-control" placeholder="e.g., 200" min="1" required />';
+
+            var buttonHtml = '<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>';
+            newRow.innerHTML = '<td>' + selectHtml + '</td><td>' + inputHtml + '</td><td>' + buttonHtml + '</td>';
+        }
+
+        function removeRow(button) {
+            if (lockFields === 'true') return;
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            reindexRows();
+        }
+
+        function reindexRows() {
+            var tableBody = document.getElementById("ingredientTable").getElementsByTagName("tbody")[0];
+            for (var i = 0; i < tableBody.rows.length; i++) {
+                var row = tableBody.rows[i];
+                var select = row.querySelector("select");
+                select.setAttribute("id", "SelectedIngredients_" + i + "__IngredientId");
+                select.setAttribute("name", "SelectedIngredients[" + i + "].IngredientId");
+
+                var input = row.querySelector("input[type='number']");
+                input.setAttribute("id", "SelectedIngredients_" + i + "__Quantity");
+                input.setAttribute("name", "SelectedIngredients[" + i + "].Quantity");
+            }
+        }
+    </script>
+}

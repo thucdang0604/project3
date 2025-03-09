@@ -1,0 +1,296 @@
+﻿@model JamesThewProject.Models.CreateOrEditRecipeViewModel
+@using Newtonsoft.Json
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit Submission";
+
+    // Chuyển danh sách nguyên liệu có sẵn thành JSON để dùng cho dòng thêm động
+    var availableIngredientsJson = JsonConvert.SerializeObject(Model.AvailableIngredients);
+}
+
+<script>
+    var availableIngredients = @Html.Raw(availableIngredientsJson);
+</script>
+
+<!-- Bọc toàn bộ nội dung trong .edit-submission-page để đặt ảnh nền -->
+<div class="edit-submission-page">
+    <div class="edit-container container mt-4">
+        <h2 class="edit-heading">Edit Your Submission</h2>
+
+        <!-- Hiển thị tổng hợp lỗi nếu có -->
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["Message"]
+            </div>
+        }
+
+        <form asp-controller="Contest"
+              asp-action="EditSubmission"
+              asp-route-submissionId="@ViewBag.SubmissionId"
+              method="post"
+              enctype="multipart/form-data">
+
+            <!-- Title -->
+            <div class="mb-3">
+                <label for="Title" class="form-label">Title</label>
+                <input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" required />
+                @if (ViewData.ModelState["Title"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["Title"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="Description" class="form-label">Description</label>
+                <textarea id="Description" name="Description" class="form-control" rows="3" required>@Model.Description</textarea>
+                @if (ViewData.ModelState["Description"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["Description"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <!-- Instructions -->
+            <div class="mb-3">
+                <label for="Instructions" class="form-label">Instructions</label>
+                <textarea id="Instructions" name="Instructions" class="form-control" rows="4" required>@Model.Instructions</textarea>
+                @if (ViewData.ModelState["Instructions"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["Instructions"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <!-- Servings -->
+            <div class="mb-3">
+                <label for="Servings" class="form-label">Servings</label>
+                <input type="number" id="Servings" name="Servings" class="form-control" value="@Model.Servings" required />
+                @if (ViewData.ModelState["Servings"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["Servings"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <!-- ImageFile -->
+            <div class="mb-3">
+                <label for="ImageFile" class="form-label">Recipe Image</label>
+                <input type="file" id="ImageFile" name="ImageFile" class="form-control" accept="image/*" />
+                @if (ViewData.ModelState["ImageFile"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["ImageFile"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <!-- Ingredients -->
+            <div class="mb-3">
+                <label class="form-label">Ingredients</label>
+                <table class="table" id="ingredientTable">
+                    <thead>
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.SelectedIngredients != null && Model.SelectedIngredients.Count > 0)
+                        {
+                            for (int i = 0; i < Model.SelectedIngredients.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <select id="@("SelectedIngredients_" + i + "__IngredientId")"
+                                                name="SelectedIngredients[@i].IngredientId"
+                                                class="form-control"
+                                                required>
+                                            <option value="">-- Select --</option>
+                                            @foreach (var ing in Model.AvailableIngredients)
+                                            {
+                                                <option value="@ing.IngredientId" @(Model.SelectedIngredients[i].IngredientId == ing.IngredientId ? "selected" : "")>
+                                                    @ing.Name (@ing.DefaultUnit)
+                                                </option>
+                                            }
+                                        </select>
+                                        @if (ViewData.ModelState[$"SelectedIngredients[{i}].IngredientId"]?.Errors.Count > 0)
+                                        {
+                                            foreach (var error in ViewData.ModelState[$"SelectedIngredients[{i}].IngredientId"].Errors)
+                                            {
+                                                <span class="text-danger">@error.ErrorMessage</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="number"
+                                               id="@("SelectedIngredients_" + i + "__Quantity")"
+                                               name="SelectedIngredients[@i].Quantity"
+                                               class="form-control"
+                                               value="@Model.SelectedIngredients[i].Quantity"
+                                               min="1"
+                                               step="1"
+                                               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                               placeholder="e.g., 200"
+                                               required />
+                                        @if (ViewData.ModelState[$"SelectedIngredients[{i}].Quantity"]?.Errors.Count > 0)
+                                        {
+                                            foreach (var error in ViewData.ModelState[$"SelectedIngredients[{i}].Quantity"].Errors)
+                                            {
+                                                <span class="text-danger">@error.ErrorMessage</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-secondary" onclick="addRow()">Add Ingredient</button>
+
+                @if (ViewData.ModelState["SelectedIngredients"]?.Errors.Count > 0)
+                {
+                    foreach (var error in ViewData.ModelState["SelectedIngredients"].Errors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                }
+            </div>
+
+            <button type="submit" class="btn-edit-submit">Update Submission</button>
+            <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function addRow() {
+            var tableBody = document.getElementById("ingredientTable").getElementsByTagName("tbody")[0];
+            var rowCount = tableBody.rows.length;
+            var newRow = tableBody.insertRow(rowCount);
+
+            var selectHtml = '<select id="SelectedIngredients_' + rowCount + '__IngredientId" name="SelectedIngredients[' + rowCount + '].IngredientId" class="form-control" required>';
+            selectHtml += '<option value="">-- Select --</option>';
+            for (var i = 0; i < availableIngredients.length; i++) {
+                var ing = availableIngredients[i];
+                selectHtml += '<option value="' + ing.IngredientId + '">' + ing.Name + ' (' + ing.DefaultUnit + ')</option>';
+            }
+            selectHtml += '</select>';
+
+            var inputHtml = '<input type="number" '
+                + 'id="SelectedIngredients_' + rowCount + '__Quantity" '
+                + 'name="SelectedIngredients[' + rowCount + '].Quantity" '
+                + 'class="form-control" '
+                + 'min="1" '
+                + 'step="1" '
+                + 'oninput="this.value = this.value.replace(/[^0-9]/g, \'\');" '
+                + 'placeholder="e.g., 200" '
+                + 'required />';
+
+            var buttonHtml = '<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>';
+
+            newRow.innerHTML = '<td>' + selectHtml + '</td><td>' + inputHtml + '</td><td>' + buttonHtml + '</td>';
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            reindexRows();
+        }
+
+        function reindexRows() {
+            var tableBody = document.getElementById("ingredientTable").getElementsByTagName("tbody")[0];
+            for (var i = 0; i < tableBody.rows.length; i++) {
+                var row = tableBody.rows[i];
+                var select = row.querySelector("select");
+                select.setAttribute("name", "SelectedIngredients[" + i + "].IngredientId");
+                select.setAttribute("id", "SelectedIngredients_" + i + "__IngredientId");
+
+                var input = row.querySelector("input[type='number']");
+                input.setAttribute("name", "SelectedIngredients[" + i + "].Quantity");
+                input.setAttribute("id", "SelectedIngredients_" + i + "__Quantity");
+            }
+        }
+    </script>
+}
+
+<!-- CSS tùy chỉnh phong cách xanh – đỏ -->
+<style>
+
+
+    /* Container overlay trắng mờ */
+    .edit-container {
+        background-color: rgba(255, 248, 240, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .edit-heading {
+        font-size: 32px;
+        color: #8B0000; /* Đỏ sắt */
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    /* Nút Update Submission => xanh đậm */
+    .btn-edit-submit {
+        background-color: #2E8B57; /* Xanh lá đậm */
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        text-transform: uppercase;
+        margin-right: 10px;
+        transition: 0.3s;
+    }
+
+        .btn-edit-submit:hover {
+            transform: scale(1.05);
+        }
+
+    /* Nút Cancel => đỏ sắt */
+    .btn-cancel {
+        background-color: #8B0000; /* Đỏ sắt */
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+
+        .btn-cancel:hover {
+            transform: scale(1.05);
+        }
+</style>

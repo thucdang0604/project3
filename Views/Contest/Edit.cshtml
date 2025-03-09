@@ -1,0 +1,74 @@
+﻿@model JamesThewProject.Models.Contest
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Contest";
+}
+
+<h1>Edit Contest</h1>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form action="/Contest/Edit" method="post" id="editContestForm">
+    <!-- Hidden field for ContestId -->
+    <input type="hidden" name="ContestId" value="@Model.ContestId" />
+
+    <div class="form-group">
+        <label for="ContestName">Contest Name</label>
+        <input type="text" id="ContestName" name="ContestName" class="form-control"
+               value="@Model.ContestName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" class="form-control" rows="4">@Model.Description</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="StartDateDisplay">Start Date</label>
+        <!-- Input để hiển thị nhưng disabled, người dùng không tương tác được -->
+        <input type="datetime-local"
+               id="StartDateDisplay"
+               class="form-control"
+               value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")"
+               disabled />
+        <!-- Hidden field để gửi giá trị thật về server -->
+        <input type="hidden"
+               id="StartDate"
+               name="StartDate"
+               value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">End Date</label>
+        <input type="datetime-local" id="EndDate" name="EndDate" class="form-control"
+               value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="IsActive">Status</label>
+        <select id="IsActive" name="IsActive" class="form-control">
+            <option value="true" @(Model.IsActive ? "selected" : "")>Active</option>
+            <option value="false" @(!Model.IsActive ? "selected" : "")>Inactive</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="/Contest/ManageContests" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('editContestForm').addEventListener('submit', function (e) {
+            var startDate = new Date(document.getElementById('StartDate').value);
+            var endDate = new Date(document.getElementById('EndDate').value);
+
+            // Validate: End Date must be after Start Date
+            if (endDate <= startDate) {
+                e.preventDefault();
+                alert("End Date must be after Start Date.");
+                document.getElementById('EndDate').focus();
+                return false;
+            }
+        });
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Http @inject IHttpContextAccessor HttpContextAccessor <!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8" /> <title>@ViewData["Title"] - James Thew Cooking</title> <meta name="viewport" content="width=device-width, initial-scale=1" /> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous" /> <link rel="stylesheet" href="~/css/site.css" /> </head> <body> <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" asp-controller="Home" asp-action="Index">JamesThewCooking</a> <div class="collapse navbar-collapse"> <ul class="navbar-nav ml-auto"> @if (HttpContextAccessor.HttpContext?.Session.GetInt32("UserId") != null) {
+    <li class="nav-item"> <a class="nav-link" asp-controller="Account" asp-action="Profile">Profile</a> </li> <li class="nav-item"> <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a> </li>
+}
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

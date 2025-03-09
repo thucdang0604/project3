@@ -1,0 +1,31 @@
+﻿@model IEnumerable<JamesThewProject.Models.ContestSubmission>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Contest Submissions";
+}
+
+<div class="container mt-4">
+    <h2>Contest Submissions</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Submission Content</th>
+                <th>Submitted At</th>
+                <th>Winner?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var submission in Model)
+            {
+                <tr>
+                    <td>@submission.User?.Email</td>
+                    <td>@submission.SubmissionContent</td>
+                    <td>@submission.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@(submission.IsWinner ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

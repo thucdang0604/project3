@@ -1,0 +1,20 @@
+﻿@model JamesThewProject.Models.Recipe
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+    // Sử dụng layout cho user
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Upgrade Your Account";
+}
+
+<div class="container mt-4">
+    <h2>Premium Content</h2>
+    <div class="alert alert-warning">
+        <p>The recipe "<strong>@Model.Title</strong>" is available for Premium members only.</p>
+        <p>If you want to view this recipe, please upgrade your account.</p>
+    </div>
+    <a href="@Url.Action("SubscriptionHistory", "Account")" class="btn btn-primary">Upgrade Account</a>
+    <a href="@Url.Action("FreeRecipes", "Recipes")" class="btn btn-secondary">Back to Recipes</a>
+</div>

@@ -1,0 +1,404 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Sử dụng layout của bạn
+    var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId");
+}
+
+<!-- Hero Section với nền tấm thớt -->
+<div class="hero-section">
+    <!-- Hộp chứa text, có nền trắng mờ để chữ nổi bật -->
+    <div class="hero-section text-center">
+        <h1 class="display-3 fw-bold">Welcome to James Thew’s Kitchen</h1>
+        <p class="lead">
+            A place where passion meets flavor—explore recipes, join our community, and cook like a pro!
+        </p>
+        <a href="@Url.Action("FreeRecipes", "Recipes")" class="btn btn-explore mt-3">
+            Explore Recipes
+        </a>
+    </div>
+</div>
+
+<!-- About Section -->
+<div class="about-container py-5">
+    <div class="about-section">
+        <img src="/image/jamesthew.jpg" alt="James Thew" class="animate__animated animate__zoomIn">
+        <div class="about-content animate__animated animate__fadeInRight">
+            <h1 class="fw-bold">Hi, I’m James Thew! 👋</h1>
+            <p>
+                Cooking is my art and my joy. From Michelin-star kitchens to your home,
+                I’m here to share delicious recipes and culinary secrets. Let’s create magic together! 🍳✨
+            </p>
+            <a href="LearnMore" class="btn btn-primary">Learn More</a>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-cards mt-5">
+        <div class="card animate__animated animate__fadeInUp">
+            <i class="bi bi-people-fill"></i>
+            <h2>About Us</h2>
+            <p>
+                A hub for food lovers to discover, share, and master recipes—
+                whether you’re a newbie or a seasoned chef.
+            </p>
+        </div>
+        <div class="card animate__animated animate__fadeInUp animate__delay-1s">
+            <i class="bi bi-egg-fried"></i>
+            <h2>Our Mission</h2>
+            <p>
+                To ignite your love for cooking with gourmet recipes and a vibrant food community.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<div class="about-us-section py-5">
+    <h2 class="text-center fw-bold text-gradient">What We Offer</h2>
+    <p class="text-center text-muted mb-4">Dive into a world of culinary delights!</p>
+    <div class="about-highlights">
+        <div class="highlight-card animate__animated animate__fadeInUp">
+            <i class="bi bi-book-fill"></i>
+            <h3>Signature Recipes</h3>
+            <p>Unique dishes crafted by James Thew.</p>
+        </div>
+        <div class="highlight-card animate__animated animate__fadeInUp animate__delay-1s">
+            <i class="bi bi-camera-reels-fill"></i>
+            <h3>Masterclasses</h3>
+            <p>Learn pro techniques step-by-step.</p>
+        </div>
+        <div class="highlight-card animate__animated animate__fadeInUp animate__delay-2s">
+            <i class="bi bi-chat-heart-fill"></i>
+            <h3>Community</h3>
+            <p>Connect with fellow food enthusiasts.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Why Join Section -->
+<div class="why-create-section py-5 text-center">
+    <h2 class="fw-bold text-gradient">Why Join Us?</h2>
+    <p class="text-muted mb-4">Here’s what makes us special:</p>
+    <ul class="list-unstyled">
+        <li>Exclusive recipes & cooking tips.</li>
+        <li>Exciting contests to showcase your skills.</li>
+        <li>Stories behind every dish.</li>
+    </ul>
+    <a href="@Url.Action("Register", "Account")" class="btn btn-join mt-3">Join Now</a>
+</div>
+
+<!-- Thư viện Icons & Animate CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    /*
+          ------------------------
+          TÔNG MÀU CHỦ ĐẠO: ĐỎ (#e74c3c) & XANH LÁ (#2ecc71)
+          ------------------------
+        */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9; /* Nền sáng để tông đỏ – xanh lá nổi bật */
+        color: #333;
+    }
+
+    /*
+          HERO SECTION
+          Dùng ảnh tấm thớt, không overlay xanh lá.
+          Có box trắng mờ cho text.
+        */
+    .hero-section {
+        position: relative;
+        /* Ảnh nền tấm thớt */
+        height: 350px;
+        background: url('/image/cutting-board.png') center center / cover no-repeat;
+        margin-bottom: 30px; /* Tạo khoảng cách so với nội dung bên dưới */
+        /* Dùng pseudo-element làm overlay đen mờ */
+    }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3); /* overlay đen 30% */
+            z-index: 1;
+        }
+
+    .hero-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2; /* Nằm trên overlay */
+        color: #fff;
+        width: 90%; /* Để text không tràn ngang trên màn hình nhỏ */
+        max-width: 700px; /* Giới hạn bề rộng */
+    }
+        .hero-section > * {
+            position: relative;
+            z-index: 2; /* Để text nằm trên overlay */
+        }
+
+        /* Chữ tiêu đề, mô tả */
+        .hero-section h1 {
+            color: #e74c3c; /* Đỏ, hoặc #fff tùy ý */
+            font-size: 3rem; /* Tăng kích thước nếu cần */
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            color: #fff;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+    .hero-overlay h1 {
+        font-size: 2rem; /* Thu gọn chữ nếu chiều cao hero ít */
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-overlay p {
+        font-size: 1.1rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Nút Explore: Đỏ, hover Xanh lá (tùy tông màu chủ đạo) */
+    /* Nút Explore: Đỏ, hover Xanh Lá (theo tông màu chủ đạo) */
+    .btn-explore {
+        background: #e74c3c; /* Đỏ */
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        border: none;
+        transition: 0.3s;
+    }
+
+        .btn-explore:hover {
+            background: #2ecc71; /* Xanh lá */
+            color: #fff;
+            transform: scale(1.05);
+        }
+    /*
+          ABOUT SECTION
+        */
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .about-section {
+        background: #fff;
+        border-radius: 15px;
+        padding: 40px;
+        display: flex;
+        gap: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        align-items: center;
+    }
+
+        .about-section img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 6px solid #2ecc71; /* Viền xanh lá */
+            object-fit: cover;
+        }
+
+    .about-content h1 {
+        font-size: 2rem;
+        color: #e74c3c; /* Đỏ */
+        margin-bottom: 1rem;
+    }
+
+    .about-content p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .btn-primary {
+        background: #2ecc71; /* Xanh lá */
+        color: #fff;
+        padding: 10px 25px;
+        border-radius: 20px;
+        font-weight: bold;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: #e74c3c; /* Đỏ */
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+    /* INFO CARDS */
+    .info-cards {
+        display: flex;
+        gap: 20px;
+        margin-top: 2rem;
+    }
+
+    .card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        flex: 1;
+    }
+
+        .card i {
+            font-size: 2.5rem;
+            color: #e74c3c; /* Đỏ */
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            color: #2ecc71; /* Xanh lá */
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+    /* ABOUT US SECTION */
+    .about-us-section {
+        background: #fff;
+        border-radius: 15px;
+        padding: 50px;
+        max-width: 1000px;
+        margin: 0 auto;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+        .about-us-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .about-us-section p {
+            color: #777;
+        }
+
+    .about-highlights {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .highlight-card {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        width: 30%;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+        .highlight-card i {
+            font-size: 2rem;
+            color: #2ecc71; /* Xanh lá */
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-card h3 {
+            color: #e74c3c; /* Đỏ */
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #555;
+        }
+
+    /* WHY CREATE SECTION */
+    .why-create-section {
+        background: #fff;
+        border-radius: 15px;
+        padding: 50px;
+        max-width: 1000px;
+        margin: 0 auto;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+        .why-create-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .why-create-section p {
+            color: #777;
+        }
+
+        .why-create-section ul {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+            .why-create-section ul li {
+                font-size: 1.1rem;
+                padding: 10px 0;
+                position: relative;
+                color: #555;
+            }
+
+                .why-create-section ul li:before {
+                    content: "✔";
+                    color: #2ecc71; /* Xanh lá */
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+
+    .btn-join {
+        background: #e74c3c; /* Đỏ */
+        color: #fff;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .btn-join:hover {
+            background: #2ecc71; /* Xanh lá */
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .about-section
+
+    {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-cards {
+        flex-direction: column;
+    }
+
+    .about-highlights {
+        flex-direction: column;
+    }
+
+    .highlight-card {
+        width: 100%;
+    }
+
+    }
+</style>

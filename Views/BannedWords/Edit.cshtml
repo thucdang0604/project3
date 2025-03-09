@@ -1,0 +1,21 @@
+﻿@model JamesThewProject.Models.BannedWord
+@{
+    ViewData["Title"] = "Edit Banned Word";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Edit Banned Word</h2>
+
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="BannedWordId" />
+        <div class="mb-3">
+            <label class="form-label">Word</label>
+            <input type="text" class="form-control" asp-for="Word" />
+            <span asp-validation-for="Word" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

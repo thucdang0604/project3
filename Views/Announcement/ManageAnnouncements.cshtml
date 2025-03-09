@@ -1,0 +1,75 @@
+﻿@model JamesThewProject.Models.ManageContestsViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Manage Announcements";
+    var query = Context.Request.Query;
+}
+
+<h1>Manage Announcements</h1>
+
+<div class="mb-3">
+    <a class="btn btn-success mb-3" href="@Url.Action("Create", "Announcement")">Create New Announcement</a>
+</div>
+
+<!-- Form Search & Sort -->
+<form method="get" action="@Url.Action("ManageAnnouncements", "Announcement")" class="mb-3">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@(query["searchString"])" placeholder="Search announcements..." class="form-control" />
+    </div>
+    <div class="form-group mt-2">
+        <select name="sortOrder" class="form-control">
+            <option value="">Sort by</option>
+            <option value="title_asc" @(query["sortOrder"] == "title_asc" ? "selected" : "")>Title (A-Z)</option>
+            <option value="title_desc" @(query["sortOrder"] == "title_desc" ? "selected" : "")>Title (Z-A)</option>
+            <option value="date_asc" @(query["sortOrder"] == "date_asc" ? "selected" : "")>Posted Date (Oldest first)</option>
+            <option value="date_desc" @(query["sortOrder"] == "date_desc" ? "selected" : "")>Posted Date (Newest first)</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Posted Date</th>
+            <th>Displayed</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Announcements != null && Model.Announcements.Any())
+        {
+            foreach (var announcement in Model.Announcements)
+            {
+                <tr>
+                    <td>@announcement.Title</td>
+                    <td>@announcement.Description</td>
+                    <td>@announcement.PostedDate.ToShortDateString()</td>
+                    <td>@(announcement.IsDisplayed ? "Yes" : "No")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(announcement.ImageUrl))
+                        {
+                            <img src="@announcement.ImageUrl" alt="Image" style="max-width:100px;" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="@Url.Action("Edit", "Announcement", new { id = announcement.Id })">Edit</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No announcements available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

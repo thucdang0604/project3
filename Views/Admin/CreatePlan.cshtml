@@ -1,0 +1,70 @@
+﻿@model JamesThewProject.Models.SubscriptionPlan?
+
+@{
+    // Nếu Model là null hoặc Model.PlanName rỗng, sử dụng giá trị mặc định
+    var localModel = Model ?? new JamesThewProject.Models.SubscriptionPlan
+            {
+                PlanName = "Test Plan",
+                Price = 9.99m,
+                DurationInDays = 30,
+                IsActive = true
+            };
+    if (string.IsNullOrWhiteSpace(Model?.PlanName))
+    {
+        localModel.PlanName = "Test Plan";
+    }
+
+    ViewData["Title"] = "Create Subscription Plan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3 text-primary">Create New Subscription Plan</h2>
+
+    <form action="@Url.Action("CreatePlan", "Admin")" method="post" class="shadow p-4 rounded bg-white">
+        <!-- Hidden field cho PlanId (đối với record mới thường là 0) -->
+        <input type="hidden" name="PlanId" value="@localModel.PlanId" />
+
+        <div class="mb-3">
+            <label for="PlanName" class="form-label">Plan Name</label>
+            <input type="text" id="PlanName" name="PlanName" class="form-control" placeholder="Enter plan name" required value="@localModel.PlanName" />
+            <span asp-validation-for="PlanName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea id="Description" name="Description" class="form-control" rows="3" placeholder="Describe the plan">@localModel.Description</textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Price" class="form-label">Price ($)</label>
+            <!-- Cho phép người dùng nhập giá trị số -->
+            <input type="number" id="Price" name="Price" class="form-control" placeholder="Enter price" required step="0.01" min="0" value="@localModel.Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="DurationInDays" class="form-label">Duration (days)</label>
+            <!-- Cho phép người dùng nhập số -->
+            <input type="number" id="DurationInDays" name="DurationInDays" class="form-control" placeholder="Enter duration in days" required min="1" value="@localModel.DurationInDays" />
+            <span asp-validation-for="DurationInDays" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="IsActive" class="form-label">Status</label>
+            <select id="IsActive" name="IsActive" class="form-control">
+                <option value="true" @(localModel.IsActive ? "selected" : "")>Active</option>
+                <option value="false" @(!localModel.IsActive ? "selected" : "")>Deactive</option>
+            </select>
+            <span asp-validation-for="IsActive" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create Plan</button>
+        <a href="@Url.Action("ManagePlans", "Admin")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

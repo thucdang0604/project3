@@ -1,0 +1,146 @@
+﻿@model IEnumerable<JamesThewProject.Models.Announcement>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Announcements";
+}
+
+<div class="announcement-container">
+    <h2 class="section-title">Latest Announcements</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <ul class="announcement-list">
+            @foreach (var announcement in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Details", "Announcement", new { id = announcement.Id })" class="announcement-item">
+                        <h4 class="announcement-title">@announcement.Title</h4>
+                        <p class="announcement-description">
+                            @(announcement.Description.Length > 100
+                                ? announcement.Description.Substring(0, 100) + "..."
+                                : announcement.Description)
+                        </p>
+                        <small class="announcement-date">
+                            Posted on @announcement.PostedDate.ToString("dd MMM yyyy")
+                        </small>
+
+                        @* Nếu thông báo có ảnh, hiển thị ảnh nhỏ ở góc phải *@
+                        @if (!string.IsNullOrWhiteSpace(announcement.ImageUrl))
+                        {
+                            <div class="announcement-thumb">
+                                <img src="@announcement.ImageUrl" alt="Announcement Image" />
+                            </div>
+                        }
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="no-feedback">No announcements available.</p>
+    }
+</div>
+
+<style>
+    /* Container chính cho Announcements */
+    .announcement-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background: linear-gradient(135deg, #fff, #f9f2e7);
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tiêu đề trang */
+    .section-title {
+        font-size: 32px;
+        text-align: center;
+        color: #8B0000; /* Màu đỏ sắt */
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+    }
+
+    /* Danh sách thông báo */
+    .announcement-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Mỗi thông báo */
+    .announcement-item {
+        position: relative; /* Cho phép định vị tuyệt đối bên trong */
+        display: block;
+        background: #fffae5;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        text-decoration: none;
+        color: #333;
+        border-left: 6px solid #8B0000; /* Điểm nhấn đỏ sắt */
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+        .announcement-item:hover {
+            background: #ffe4b5;
+            transform: translateY(-4px);
+        }
+
+    /* Hình nhỏ hiển thị ảnh của thông báo ở góc phải */
+    .announcement-thumb {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        background: #fff;
+        /* Bỏ bo tròn để ảnh vuông */
+        border-radius: 0;
+    }
+
+        .announcement-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    /* Tiêu đề thông báo */
+    .announcement-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #8B0000;
+        margin-bottom: 8px;
+    }
+
+    /* Mô tả thông báo */
+    .announcement-description {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    /* Ngày đăng thông báo */
+    .announcement-date {
+        font-size: 14px;
+        color: #777;
+        font-style: italic;
+    }
+
+    /* Thông báo khi không có dữ liệu */
+    .no-feedback {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+        font-style: italic;
+        margin-top: 20px;
+    }
+</style>

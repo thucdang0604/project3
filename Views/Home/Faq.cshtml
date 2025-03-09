@@ -1,0 +1,268 @@
+﻿@{
+    ViewData["Title"] = "Frequently Asked Questions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="faq-hero">
+    <div class="faq-hero-text-box text-center">
+        <h1 class="display-4 fw-bold text-gradient">Frequently Asked Questions</h1>
+        <p class="lead text-muted">Find answers to your questions about JamesThewProject</p>
+    </div>
+</div>
+
+    <!-- FAQ Accordion -->
+    <div class="accordion faq-accordion" id="faqAccordion">
+        <!-- Question 1 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    <i class="bi bi-question-circle-fill me-2"></i> How do I register an account?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    To register, click on the <strong>"Register"</strong> link in the navigation bar, then fill out the form with your email, password, and confirm your password. After submitting, check your inbox for an activation link.
+                </div>
+            </div>
+        </div>
+        <!-- Question 2 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> How do I log in to my account?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Click the <strong>"Login"</strong> link in the navbar, enter your email and password, then hit Login. Once activated and your profile is complete, you’ll land on the homepage.
+                </div>
+            </div>
+        </div>
+        <!-- Question 3 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    <i class="bi bi-person-fill me-2"></i> How do I complete my profile?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    After your first login, you’ll be prompted to add details like full name, date of birth, gender, address, phone number, and an avatar to complete your profile.
+                </div>
+            </div>
+        </div>
+        <!-- Question 4 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                        aria-expanded="false" aria-controls="collapseFour">
+                    <i class="bi bi-image me-2"></i> How do I update my avatar?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Go to the <strong>"Profile"</strong> page, click <strong>"Edit Profile"</strong>, upload your new avatar, and save the changes.
+                </div>
+            </div>
+        </div>
+        <!-- Question 5 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                        aria-expanded="false" aria-controls="collapseFive">
+                    <i class="bi bi-key-fill me-2"></i> How do I reset my password?
+                </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    For now, contact support or use the <strong>"Forgot Password"</strong> link if available. A self-service reset feature is in the works!
+                </div>
+            </div>
+        </div>
+        <!-- Question 6 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix"
+                        aria-expanded="false" aria-controls="collapseSix">
+                    <i class="bi bi-envelope-fill me-2"></i> How do I activate my account via email?
+                </button>
+            </h2>
+            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    After signing up, you’ll get an email with an activation link. Click it to confirm your email and activate your account.
+                </div>
+            </div>
+        </div>
+        <!-- Question 7 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingSeven">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven"
+                        aria-expanded="false" aria-controls="collapseSeven">
+                    <i class="bi bi-star-fill me-2"></i> How can I subscribe for premium content?
+                </button>
+            </h2>
+            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in, head to your account dashboard, and follow the subscription options to unlock premium content.
+                </div>
+            </div>
+        </div>
+        <!-- Question 8 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingEight">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight"
+                        aria-expanded="false" aria-controls="collapseEight">
+                    <i class="bi bi-trophy-fill me-2"></i> How do I participate in contests?
+                </button>
+            </h2>
+            <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in, visit the <strong>"Contests"</strong> section, read the rules, and submit your entry via the form.
+                </div>
+            </div>
+        </div>
+        <!-- Question 9 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingNine">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine"
+                        aria-expanded="false" aria-controls="collapseNine">
+                    <i class="bi bi-chat-dots-fill me-2"></i> How do I provide feedback or report issues?
+                </button>
+            </h2>
+            <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Go to the <strong>"Feedback"</strong> section, fill out the form with your comments, and submit. We’ll review it ASAP!
+                </div>
+            </div>
+        </div>
+        <!-- Question 10 -->
+        <div class="accordion-item shadow-sm">
+            <h2 class="accordion-header" id="headingTen">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen"
+                        aria-expanded="false" aria-controls="collapseTen">
+                    <i class="bi bi-info-circle-fill me-2"></i> Who is James Thew and what is this website about?
+                </button>
+            </h2>
+            <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    James Thew is a celebrated chef famous for creative recipes. This site shares free and premium recipes, hosts contests, and connects food enthusiasts.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <div class="text-center mt-4">
+        <a href="#" class="btn btn-back-to-top"><i class="bi bi-arrow-up-circle"></i> Back to Top</a>
+    </div>
+</div>
+
+<style>
+    /* Header Gradient: Đỏ sẫm – Xanh lá đậm */
+    .text-gradient {
+        background: linear-gradient(45deg, #8B0000, #2E8B57);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    /* FAQ Accordion Container */
+    .faq-accordion .accordion-item {
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .faq-accordion .accordion-button {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #444;
+        background: linear-gradient(90deg, #fff8e1, #fff);
+        padding: 1.25rem;
+        transition: all 0.3s ease;
+    }
+
+        .faq-accordion .accordion-button:not(.collapsed) {
+            color: #2E8B57; /* Xanh lá đậm */
+            background: #fff;
+            box-shadow: none;
+        }
+
+        .faq-accordion .accordion-button:focus {
+            box-shadow: none;
+            outline: none;
+        }
+
+        .faq-accordion .accordion-button:hover {
+            background: #fff8e1;
+        }
+
+    .faq-accordion .accordion-body {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        padding: 1.5rem;
+    }
+
+        .faq-accordion .accordion-body strong {
+            color: #8B0000; /* Đỏ sẫm */
+        }
+
+    /* Icons màu đỏ – xanh */
+    .accordion-button i {
+        color: #8B0000; /* Đỏ sẫm */
+        font-size: 1.2rem;
+    }
+
+    /* Nút "Back to Top" màu đỏ – xanh */
+    .btn-back-to-top {
+        background: #2E8B57; /* Xanh lá đậm */
+        color: #fff;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .faq-hero {
+        position: relative;
+        /* Nếu bạn đang có ảnh nền, giữ code cũ hoặc thêm: */
+        background: url('/image/faq-background.jpg') center center / cover no-repeat;
+        min-height: 300px; /* chiều cao tối thiểu */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Hộp chứa tiêu đề, có nền mờ để chữ nổi */
+    .faq-hero-text-box {
+        background-color: rgba(255, 255, 255, 0.7); /* nền trắng mờ 70% */
+        padding: 20px 30px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    /* Giữ gradient xanh-đỏ, nhưng thêm text-shadow hoặc stroke nếu muốn */
+    .text-gradient {
+        background: linear-gradient(45deg, #8B0000, #2E8B57);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        /* Tăng độ nổi cho chữ */
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+        /* Hoặc thêm stroke (chỉ hỗ trợ tốt trên WebKit): */
+        /* -webkit-text-stroke: 1px #fff; */
+    }
+        .btn-back-to-top:hover {
+            background: #8B0000; /* Đỏ sẫm */
+            color: #fff;
+            transform: translateY(-3px);
+        }
+</style>

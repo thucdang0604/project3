@@ -1,0 +1,191 @@
+﻿@model JamesThewProject.Models.ContestSubmissionRecipeViewModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    // Lấy thông tin người dùng từ session
+    int? userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId");
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Contest Details";
+
+    // Xác định trạng thái cuộc thi
+    bool isOngoing = DateTime.Now >= Model.Contest.StartDate && DateTime.Now <= Model.Contest.EndDate;
+    bool isUpcoming = DateTime.Now < Model.Contest.StartDate;
+    bool isEnded = DateTime.Now > Model.Contest.EndDate;
+
+    var userSubmission = Model.Contest.Submissions?.FirstOrDefault(s => s.UserId == userId);
+}
+
+<!--
+     BỌC TOÀN BỘ NỘI DUNG TRANG
+     TRONG .contest-detail-page ĐỂ ĐẶT ẢNH NỀN
+-->
+<div class="contest-detail-page">
+    <div class="detail-container container mt-4">
+        <h2 class="text-center contest-title">@Model.Contest.ContestName</h2>
+        <p class="contest-dates">
+            <strong>Start Date:</strong> @Model.Contest.StartDate.ToString("yyyy-MM-dd HH:mm")<br />
+            <strong>End Date:</strong> @Model.Contest.EndDate.ToString("yyyy-MM-dd HH:mm")
+        </p>
+        <p class="contest-desc"><strong>Description:</strong> @Model.Contest.Description</p>
+
+        <hr />
+
+        @if (userId == null)
+        {
+            <div class="alert alert-warning text-center">
+                Please <a href='@Url.Action("Login", "Account")'>login</a> or
+                <a href='@Url.Action("Register", "Account")'>register</a> to submit your entry.
+            </div>
+        }
+        else
+        {
+            if (userSubmission == null)
+            {
+                if (isUpcoming)
+                {
+                    <div class="alert alert-info text-center">
+                        Contest not yet open. Please wait until it opens.
+                    </div>
+                }
+                else if (isOngoing)
+                {
+                    <a class="btn-contest btn-submit" href='@Url.Action("SubmitEntryGet", "Contest", new { id = Model.Contest.ContestId })'>
+                        Submit Entry
+                    </a>
+                }
+                else if (isEnded)
+                {
+                    <div class="alert alert-info text-center">
+                        Contest ended, no new submissions.
+                    </div>
+                }
+            }
+            else
+            {
+                if (isOngoing)
+                {
+                    <a class="btn-contest btn-edit" href='@Url.Action("EditSubmission", "Contest", new { submissionId = userSubmission.SubmissionId })'>
+                        Edit Submission
+                    </a>
+                }
+                else
+                {
+                    <div class="alert alert-info text-center">
+                        Contest ended, cannot edit submission.
+                    </div>
+                }
+            }
+        }
+
+        <hr />
+        <h4 class="submission-heading">Current Submissions (@(Model.Contest.Submissions?.Count() ?? 0))</h4>
+        @if (Model.Contest.Submissions != null && Model.Contest.Submissions.Any())
+        {
+            <ul class="submission-list">
+                @foreach (var sub in Model.Contest.Submissions)
+                {
+                    <li>
+                        <strong>@sub.User?.Email</strong> - submitted at @sub.SubmittedAt.ToString("yyyy-MM-dd HH:mm")<br />
+                        Content: @sub.SubmissionContent<br />
+                        Winner: @(sub.IsWinner ? "Yes" : "No")
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-center text-muted">No submissions yet.</p>
+        }
+
+        <a class="btn-contest btn-back mt-3" href='@Url.Action("List", "Contest")'>Back to Contest List</a>
+    </div>
+</div>
+
+<!-- CSS phong cách xanh – đỏ -->
+<style>
+   
+    /* Overlay trắng mờ cho container chính */
+    .detail-container {
+        background-color: rgba(255, 248, 240, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        max-width: 900px;
+        margin: auto;
+        color: #333;
+    }
+
+    /* Tiêu đề cuộc thi */
+    .contest-title {
+        font-size: 32px;
+        color: #8B0000; /* Đỏ sắt */
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+    }
+
+    .contest-dates, .contest-desc {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    /* Nút chung */
+    .btn-contest {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: 0.3s;
+        color: #fff;
+        border: none;
+        margin-right: 5px;
+    }
+
+        .btn-contest:hover {
+            transform: scale(1.05);
+        }
+
+    /* Nút Submit Entry => xanh lá */
+    .btn-submit {
+        background-color: #2E8B57; /* Xanh đậm */
+    }
+
+    /* Nút Edit Submission => vàng */
+    .btn-edit {
+        background-color: #fbc02d;
+        color: #fff;
+    }
+
+    /* Nút Back => xám / xanh? Tùy ý */
+    .btn-back {
+        background-color: #8B0000; /* Đỏ sắt */
+    }
+
+    /* Phần Submissions */
+    .submission-heading {
+        font-size: 20px;
+        color: #2E8B57; /* Xanh đậm */
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .submission-list {
+        list-style: none;
+        padding-left: 0;
+        font-size: 16px;
+        color: #555;
+    }
+
+        .submission-list li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+</style>

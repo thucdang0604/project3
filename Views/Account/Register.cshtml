@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    /* Tránh ghi đè body, container của layout. Sử dụng lớp riêng. */
+    .register-page {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .register-container {
+        max-width: 450px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        font-family: 'Poppins', sans-serif;
+        color: #4a4a4a;
+    }
+
+        /* Tiêu đề trang */
+        .register-container h2 {
+            font-size: 28px;
+            text-align: center;
+            color: #8B0000; /* Đỏ sẫm */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+        }
+
+        /* Input */
+        .register-container .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease-in-out;
+        }
+
+            .register-container .form-control:focus {
+                border-color: #2E8B57; /* Xanh lá đậm */
+                box-shadow: 0 0 10px rgba(46,139,87,0.4);
+                outline: none;
+            }
+
+        /* Nút Register => Đỏ sẫm, hover Xanh lá đậm */
+        .register-container .btn-primary {
+            background-color: #8B0000; /* Đỏ sẫm */
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 30px;
+            transition: 0.3s ease-in-out;
+        }
+
+            .register-container .btn-primary:hover {
+                background-color: #2E8B57; /* Xanh lá đậm */
+                transform: scale(1.05);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+
+        /* Alert */
+        .register-container .alert {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Link => Đỏ sẫm -> hover Xanh lá đậm */
+        .register-container a {
+            color: #8B0000;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+            .register-container a:hover {
+                color: #2E8B57;
+                text-decoration: underline;
+            }
+</style>
+
+<div class="register-page">
+    <div class="register-container">
+        <h2>Register</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-action="Register" method="post">
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <input type="email" name="email" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password:</label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password:</label>
+                <input type="password" name="confirmPassword" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <p class="mt-3 text-center">
+            Already have an account?
+            <a href="@Url.Action("Login", "Account")">Login</a>
+        </p>
+    </div>
+</div>

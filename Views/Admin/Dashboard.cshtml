@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model JamesThewProject.Models.DashboardViewModel
+
+@{
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+
+    // Nếu là Admin -> dùng layout admin
+    // Nếu là Manager -> bạn cũng có thể dùng layout admin, hoặc 1 layout riêng
+    Layout = (userRole == "Admin" || userRole == "Manager")
+        ? "~/Views/Shared/_AdminLayout.cshtml"
+        : "~/Views/Shared/_Layout.cshtml";
+
+    // Đặt tiêu đề trang dựa trên role
+    ViewData["Title"] = (userRole == "Manager") ? "Manager Dashboard" : "Admin Dashboard";
+}
+
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        @if (userRole == "Manager")
+        {
+            <h1 class="display-5 fw-bold text-gradient">Manager Dashboard</h1>
+        }
+        else
+        {
+            <h1 class="display-5 fw-bold text-gradient">Admin Dashboard</h1>
+        }
+
+        <span class="text-muted">Manage your application with ease</span>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4">
+        <!-- Users Card -->
+        @if (userRole == "Admin")
+        {
+            <!-- Chỉ admin mới thấy Manage Users -->
+            <div class="col-md-6 col-lg-3">
+                <a href="@Url.Action("ManageUsers", "Admin")" class="text-decoration-none">
+                    <div class="card stat-card shadow-lg users-card">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bi bi-people-fill stat-icon"></i>
+                            <div class="ms-3">
+                                <h5 class="card-title fw-bold text-white">Users</h5>
+                                <p class="card-text text-white opacity-75">Total: @Model.TotalUsers</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        <!-- Recipes Card: Cả Manager và Admin đều thấy -->
+        <div class="col-md-6 col-lg-3">
+            <a href="@Url.Action("ManageRecipes", "Recipes")" class="text-decoration-none">
+                <div class="card stat-card shadow-lg recipes-card">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="bi bi-book-fill stat-icon"></i>
+                        <div class="ms-3">
+                            <h5 class="card-title fw-bold text-white">Recipes</h5>
+                            <p class="card-text text-white opacity-75">Total: @Model.TotalRecipes</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Contests Card: Cả Manager và Admin đều thấy -->
+        <div class="col-md-6 col-lg-3">
+            <a href="@Url.Action("ManageContests", "Contest")" class="text-decoration-none">
+                <div class="card stat-card shadow-lg contests-card">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="bi bi-trophy-fill stat-icon"></i>
+                        <div class="ms-3">
+                            <h5 class="card-title fw-bold text-white">Contests</h5>
+                            <p class="card-text text-white opacity-75">Active: @Model.ActiveContests</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Feedback Card: Cả Manager và Admin đều thấy -->
+        <div class="col-md-6 col-lg-3">
+            <a href="@Url.Action("ManageFeedback", "Admin")" class="text-decoration-none">
+                <div class="card stat-card shadow-lg feedback-card">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="bi bi-chat-dots-fill stat-icon"></i>
+                        <div class="ms-3">
+                            <h5 class="card-title fw-bold text-white">Feedback</h5>
+                            <p class="card-text text-white opacity-75">New: @Model.NewFeedback</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Gradient Text */
+    .text-gradient {
+        background: linear-gradient(45deg, #1e3c72, #2a69ac);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 120px;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .users-card {
+        background: linear-gradient(135deg, #007bff, #00c4cc);
+    }
+
+    .recipes-card {
+        background: linear-gradient(135deg, #28a745, #85e085);
+    }
+
+    .contests-card {
+        background: linear-gradient(135deg, #ffc107, #ff8c00);
+    }
+
+    .feedback-card {
+        background: linear-gradient(135deg, #dc3545, #ff6b6b);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .card-title {
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+    .card-text {
+        margin: 0;
+        font-size: 1rem;
+    }
+</style>

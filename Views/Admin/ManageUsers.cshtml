@@ -1,0 +1,71 @@
+﻿@model IEnumerable<JamesThewProject.Models.User>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Manage Users";
+}
+
+<h1>Manage Users</h1>
+
+<form method="get" action="@Url.Action("ManageUsers", "Admin")" class="mb-4">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@(ViewBag.SearchString ?? "")" placeholder="Search by email or name..." class="form-control" />
+    </div>
+    <div class="form-group mt-2">
+        <select name="sortOrder" class="form-control">
+            <option value="">Sort by</option>
+            <option value="email_asc" @(ViewBag.SortOrder == "email_asc" ? "selected" : "")>Email (A-Z)</option>
+            <option value="email_desc" @(ViewBag.SortOrder == "email_desc" ? "selected" : "")>Email (Z-A)</option>
+            <option value="name_asc" @(ViewBag.SortOrder == "name_asc" ? "selected" : "")>Name (A-Z)</option>
+            <option value="name_desc" @(ViewBag.SortOrder == "name_desc" ? "selected" : "")>Name (Z-A)</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>
+
+<!-- Nút tạo Manager -->
+<a class="btn btn-success mb-3"
+   href="@Url.Action("CreateManager", "Admin")">
+    Create Manager
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Membership</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserId</td>
+                    <td>@user.Email</td>
+                    <td>@user.FullName</td>
+                    <td>@user.Role</td>
+                    <td>@(user.IsActive ? "Active" : "Inactive")</td>
+                    <td>@user.MembershipType</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm"
+                           href='@Url.Action("EditUser", "Admin", new { id = user.UserId })'>
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">No users found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

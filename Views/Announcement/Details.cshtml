@@ -1,0 +1,102 @@
+﻿@model JamesThewProject.Models.Announcement
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="announcement-detail-container">
+    <h1>@Model.Title</h1>
+    <p class="text-muted">Posted on @Model.PostedDate.ToString("dd MMM yyyy")</p>
+    <hr />
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <div class="img-wrapper">
+            <img src="@Model.ImageUrl" alt="Announcement Image" class="img-fluid" />
+        </div>
+    }
+    <p class="announcement-description">@Model.Description</p>
+    <div class="btn-wrapper">
+        <a href="@Url.Action("List", "Announcement")" class="btn btn-secondary">Back to Announcements</a>
+    </div>
+</div>
+
+<style>
+    /* Container chính */
+    .announcement-detail-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: rgba(255, 248, 240, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-family: 'Merriweather', serif;
+        color: #4a4a4a;
+    }
+
+        /* Tiêu đề */
+        .announcement-detail-container h1 {
+            font-size: 32px;
+            text-align: center;
+            color: #8B0000; /* Sắt đỏ */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+        }
+
+        /* Ngày đăng */
+        .announcement-detail-container .text-muted {
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Đường kẻ ngang */
+        .announcement-detail-container hr {
+            margin: 20px 0;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+
+    /* Hình ảnh */
+    .img-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .announcement-detail-container img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Mô tả */
+    .announcement-description {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Nút Back */
+    .btn-wrapper {
+        text-align: center;
+    }
+
+    .btn.btn-secondary {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        background-color: #8B0000; /* Sắt đỏ */
+        color: #fff;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+        .btn.btn-secondary:hover {
+            background-color: #a52a2a; /* Hơi sáng hơn */
+        }
+</style>

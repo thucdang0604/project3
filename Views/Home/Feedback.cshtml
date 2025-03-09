@@ -1,0 +1,66 @@
+﻿@model JamesThewProject.Models.FeedbackViewModel
+@{
+    ViewData["Title"] = "Send Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 feedback-container">
+    <h2 class="section-title">Send New Feedback</h2>
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> @TempData["Message"];
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <form asp-action="Feedback" method="post" class="feedback-form">
+        <div class="mb-3">
+            <label for="NewFeedback_Content" class="form-label">Content</label>
+            <textarea id="NewFeedback_Content" name="NewFeedback.Content" class="form-control" rows="3" placeholder="Describe your feedback"></textarea>
+            <span asp-validation-for="NewFeedback.Content" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary feedback-btn">Send Feedback</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .feedback-container {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        text-align: center;
+        font-weight: bold;
+        color: #D2691E;
+        margin-bottom: 20px;
+    }
+
+    .feedback-form {
+        padding: 20px;
+        background: #fffae6;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-btn {
+        background: #D2691E;
+        border: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .feedback-btn:hover {
+            background: #A0522D;
+        }
+</style>

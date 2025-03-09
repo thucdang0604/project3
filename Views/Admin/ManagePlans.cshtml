@@ -1,0 +1,70 @@
+﻿@model IEnumerable<JamesThewProject.Models.SubscriptionPlan>
+
+@{
+    ViewData["Title"] = "Manage Subscription Plans";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var query = Context.Request.Query;
+}
+
+<h2>Manage Subscription Plans</h2>
+<a class="btn btn-success mb-3" href="@Url.Action("CreatePlan", "Admin")">Add New Plan</a>
+
+<!-- Form Search & Sort -->
+<form method="get" action="@Url.Action("ManagePlans", "Admin")" class="mb-3">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@(query["searchString"])" placeholder="Search plans..." class="form-control" />
+    </div>
+    <div class="form-group mt-2">
+        <select name="sortOrder" class="form-control">
+            <option value="">Sort by</option>
+            <option value="name_asc" @(query["sortOrder"] == "name_asc" ? "selected" : "")>Plan Name (A-Z)</option>
+            <option value="name_desc" @(query["sortOrder"] == "name_desc" ? "selected" : "")>Plan Name (Z-A)</option>
+            <option value="price_asc" @(query["sortOrder"] == "price_asc" ? "selected" : "")>Price (Low to High)</option>
+            <option value="price_desc" @(query["sortOrder"] == "price_desc" ? "selected" : "")>Price (High to Low)</option>
+            <option value="duration_asc" @(query["sortOrder"] == "duration_asc" ? "selected" : "")>Duration (Short to Long)</option>
+            <option value="duration_desc" @(query["sortOrder"] == "duration_desc" ? "selected" : "")>Duration (Long to Short)</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Plan Name</th>
+            <th>Description</th>
+            <th>Price ($)</th>
+            <th>Duration (days)</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var plan in Model)
+            {
+                <tr>
+                    <td>@plan.PlanName</td>
+                    <td>@plan.Description</td>
+                    <td>@plan.Price</td>
+                    <td>@plan.DurationInDays</td>
+                    <td>@(plan.IsActive ? "Active" : "Deactive")</td>
+                    <td>@plan.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@plan.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("EditPlan", "Admin", new { id = plan.PlanId })">Edit</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" class="text-center">No subscription plans found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

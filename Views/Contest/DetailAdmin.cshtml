@@ -1,0 +1,65 @@
+﻿@using JamesThewProject.Models.ViewModels
+@model ContestDetailAdminViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Contest Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@Model.Contest.ContestName</h2>
+    <p>
+        <strong>Description:</strong> @Model.Contest.Description<br />
+        <strong>Start Date:</strong> @Model.Contest.StartDate.ToString("yyyy-MM-dd HH:mm")<br />
+        <strong>End Date:</strong> @Model.Contest.EndDate.ToString("yyyy-MM-dd HH:mm")<br />
+        <strong>Status:</strong> @(Model.Contest.IsActive ? "Active" : "Inactive")
+    </p>
+
+    <hr />
+
+    <h4>Submissions (@(Model.Contest.Submissions?.Count() ?? 0))</h4>
+    @if (Model.SubmissionRecipes != null && Model.SubmissionRecipes.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>User Email</th>
+                    <th>Submission Content</th>
+                    <th>Submitted At</th>
+                    <th>Winner?</th>
+                    <th>Recipe Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SubmissionRecipes)
+                {
+                    <tr>
+                        <td>@item.Submission.User?.Email</td>
+                        <td>@item.Submission.SubmissionContent</td>
+                        <td>@item.Submission.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@(item.Submission.IsWinner ? "Yes" : "No")</td>
+                        <td>@item.Recipe.Title</td>
+                        <td>
+                            @if (!item.Submission.IsWinner)
+                            {
+                                <a class="btn btn-success btn-sm" href='@Url.Action("MarkWinner", "Contest", new { submissionId = item.Submission.SubmissionId, contestId = Model.Contest.ContestId })'>Mark Winner</a>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Winner</span>
+                            }
+                            <a class="btn btn-info btn-sm" href='@Url.Action("Details", "Recipes", new { id = item.Recipe.RecipeId })'>View Recipe</a>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No submissions yet.</p>
+    }
+
+    <a class="btn btn-secondary" href='@Url.Action("ManageContests", "Contest")'>Back to Manage Contests</a>
+</div>

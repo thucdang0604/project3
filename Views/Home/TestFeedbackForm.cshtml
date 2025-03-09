@@ -1,0 +1,10 @@
+﻿@model JamesThewProject.Models.Feedback
+
+<form asp-action="TestFeedbackForm" method="post">
+    <div class="mb-3">
+        <label for="Content" class="form-label">Content</label>
+        <textarea id="Content" name="Content" class="form-control" rows="3" placeholder="Describe the plan">Description</textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Feedback</button>
+</form>

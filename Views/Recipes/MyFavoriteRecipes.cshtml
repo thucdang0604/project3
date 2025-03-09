@@ -1,0 +1,260 @@
+﻿@model IEnumerable<JamesThewProject.Models.Recipe>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "My Favorite Recipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var query = Context.Request.Query;
+
+    // Xác định sort mặc định: nếu không có thì là "title_asc"
+    var initialSort = query["sortOrder"].ToString();
+    if (string.IsNullOrEmpty(initialSort))
+    {
+        initialSort = "title_asc";
+    }
+}
+
+<div class="container my-recipes-container mt-5">
+    <h2 class="section-title">My Favorite Recipes</h2>
+
+    <!-- Form Search & Sort (nằm trên 1 hàng, không có nút submit) -->
+    <form id="searchForm" method="get" action="@Url.Action("MyFavoriteRecipes", "Recipes")" class="mb-4 d-flex align-items-center gap-2">
+        <input type="text" id="searchString" name="searchString" value="@(query["searchString"])" placeholder="Search favorites..." class="form-control" style="max-width:300px;" />
+        <button type="button" id="toggleSort" class="btn btn-secondary">
+            @if (initialSort == "title_desc")
+            {
+                @:Sort: Z-A
+            }
+            else
+            {
+                @:Sort: A-Z
+            }
+        </button>
+    </form>
+
+    <div id="favoritesContainer" class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <p class="alert alert-info text-center">
+                    You haven't added any recipes to your favorites.
+                </p>
+            </div>
+        }
+        else
+        {
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-4 mb-4 d-flex">
+                    <!-- Sử dụng flex để card có chiều cao đồng đều -->
+                    <div class="recipe-card card flex-fill">
+                        @if (!string.IsNullOrEmpty(recipe.ImageUrl))
+                        {
+                            <img src="@recipe.ImageUrl" alt="@recipe.Title" class="card-img-top" style="height:200px;object-fit:cover;" onerror="this.src='/images/default-recipe.jpg';" />
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@recipe.Title</h5>
+                            @if (!string.IsNullOrEmpty(recipe.Description))
+                            {
+                                <p class="card-text">@recipe.Description</p>
+                            }
+                            <!-- Hiển thị Rating dưới dạng sao -->
+                            @{
+                                double avgRating = recipe.AverageRating;
+                                int fullStars = (int)Math.Floor(avgRating);
+                                int emptyStars = 5 - fullStars;
+                            }
+                            <div class="mb-2">
+                                <strong>Rating:</strong>
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <i class="bi bi-star-fill" style="color:gold;"></i>
+                                }
+                                @for (int i = 0; i < emptyStars; i++)
+                                {
+                                    <i class="bi bi-star" style="color:gold;"></i>
+                                }
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Nút xem chi tiết: icon con mắt -->
+                                <a href="@Url.Action("Details", "Recipes", new { id = recipe.RecipeId })" class="btn-view" title="View Details">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <!-- Nút Remove from Favorites: icon trái tim với dấu gạch (hoặc bạn có thể giữ text nếu muốn) -->
+                                <form method="post" action="@Url.Action("RemoveFromFavorites", "Recipes")" style="display:inline;">
+                                    <input type="hidden" name="recipeId" value="@recipe.RecipeId" />
+                                    <button type="submit" class="btn-favorite" title="Remove from Favorites">
+                                        <i class="bi bi-heartbreak-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<!-- jQuery và Script AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Khai báo giá trị sort order ban đầu
+    var currentSortOrder = '@initialSort';
+
+    function loadFavorites() {
+        var searchString = $("#searchString").val();
+        $.ajax({
+            url: '@Url.Action("MyFavoriteRecipes", "Recipes")',
+            data: { searchString: searchString, sortOrder: currentSortOrder },
+            type: 'GET',
+            success: function(result) {
+                // Tìm container favorites trong HTML trả về
+                var newContent = $(result).find("#favoritesContainer").html();
+                $("#favoritesContainer").html(newContent);
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + error);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        // Gọi loadFavorites khi gõ phím trong ô tìm kiếm
+        $("#searchString").on("keyup", function(){
+            loadFavorites();
+        });
+
+        // Khi nhấn nút toggle sort, thay đổi sort order và cập nhật text
+        $("#toggleSort").on("click", function(){
+            if(currentSortOrder === "title_asc") {
+                currentSortOrder = "title_desc";
+                $(this).text("Sort: Z-A");
+            } else {
+                currentSortOrder = "title_asc";
+                $(this).text("Sort: A-Z");
+            }
+            loadFavorites();
+        });
+
+        // Ngăn submit form truyền thống (nếu nhấn Enter)
+        $("#searchForm").on("submit", function(e){
+            e.preventDefault();
+            loadFavorites();
+        });
+    });
+</script>
+
+<style>
+    /* Container cho My Favorite Recipes (giống Free Recipes) */
+    .my-recipes-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        /* Nếu muốn nền card giống Free Recipes thì để nền trong suốt */
+        background: transparent;
+    }
+
+    .section-title {
+        text-align: center;
+        font-weight: bold;
+        color: #d35400;
+        margin-bottom: 25px;
+        font-size: 26px;
+        border-bottom: 3px solid #d35400;
+        padding-bottom: 10px;
+    }
+
+    /* Card cho từng recipe - dùng nền gỗ giống Free Recipes */
+    .recipe-card {
+        background: url('/image/menu2.jpg') no-repeat center center;
+        background-size: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        transition: 0.3s ease-in-out;
+        overflow: hidden;
+        border: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .recipe-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+    /* Ảnh công thức */
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    /* Card Body: nền trắng mờ để chữ dễ đọc */
+    .card-body {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        padding: 15px;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Card Title */
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Card Text: giới hạn 2 dòng nếu cần */
+    .card-text {
+        color: #555;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 1rem;
+    }
+
+    /* Rating section */
+    .mb-2 {
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Các nút */
+    .btn-view, .btn-favorite {
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        padding: 8px 12px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-right: 5px;
+    }
+
+    /* Nút xem chi tiết: icon con mắt, màu xanh dương */
+    .btn-view {
+        background-color: #2980b9;
+    }
+
+        .btn-view:hover {
+            background-color: #3498db;
+            transform: scale(1.05);
+        }
+
+    /* Nút Remove from Favorites: icon trái tim (có thể dùng icon khác nếu muốn) */
+    .btn-favorite {
+        background-color: #c0392b;
+    }
+
+        .btn-favorite:hover {
+            background-color: #e74c3c;
+            transform: scale(1.05);
+        }
+</style>

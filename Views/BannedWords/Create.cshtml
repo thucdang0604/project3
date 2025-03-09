@@ -1,0 +1,21 @@
+﻿@model JamesThewProject.Models.BannedWord
+@{
+    ViewData["Title"] = "Add Banned Word";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Add Banned Word</h2>
+
+    <form method="post" action="@Url.Action("Create", "BannedWords")">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label for="Word" class="form-label">Word</label>
+            <input type="text" id="Word" name="Word" value="@(Model != null ? Model.Word : "")" class="form-control" />
+            <!-- Nếu có validation, bạn có thể hiển thị lỗi theo cách thủ công -->
+            @Html.ValidationMessage("Word", "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="@Url.Action("Index", "BannedWords")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

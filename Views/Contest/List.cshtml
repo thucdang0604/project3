@@ -1,0 +1,226 @@
+﻿@model IEnumerable<JamesThewProject.Models.Contest>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    // Lấy thông tin người dùng từ session
+    int? userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId");
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+
+    // Sử dụng layout mặc định (hoặc admin nếu cần)
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Contests";
+
+    // Phân loại cuộc thi:
+    // Ongoing: đã bắt đầu và chưa kết thúc
+    var ongoingContests = Model.Where(c => c.StartDate <= DateTime.Now && c.EndDate >= DateTime.Now).ToList();
+    // Upcoming: chưa bắt đầu
+    var upcomingContests = Model.Where(c => c.StartDate > DateTime.Now).ToList();
+}
+<!-- Bọc toàn bộ trang trong .contest-page để đặt ảnh nền -->
+<div class="contest-page">
+    <div class="contest-container container">
+        <h2 class="contest-heading">Contests</h2>
+
+        @if (userId == null)
+        {
+            <div class="alert alert-warning text-center">
+                Please <a href='@Url.Action("Login", "Account")'>login</a> or
+                <a href='@Url.Action("Register", "Account")'>register</a> to view contest details.
+            </div>
+        }
+
+        <!-- Ongoing Contests -->
+        <h3 class="contest-subheading">Ongoing Contests (@ongoingContests.Count)</h3>
+        @if (ongoingContests.Any())
+        {
+            @foreach (var contest in ongoingContests)
+            {
+                var userSubmission = contest.Submissions?.FirstOrDefault(s => s.UserId == userId);
+                <div class="contest-card ongoing-contest">
+                    <h4 class="contest-title">@contest.ContestName</h4>
+                    <p class="contest-text">@contest.Description</p>
+                    <p class="contest-dates">
+                        Starts: @contest.StartDate.ToString("yyyy-MM-dd HH:mm")<br />
+                        Ends: @contest.EndDate.ToString("yyyy-MM-dd HH:mm")
+                    </p>
+                    @if (userId != null)
+                    {
+                        <a class="btn-contest btn-view" href='@Url.Action("DetailUser", "Contest", new { id = contest.ContestId })'>View Details</a>
+                        @if (userSubmission == null)
+                        {
+                            <a class="btn-contest btn-submit" href='@Url.Action("SubmitEntryGet", "Contest", new { id = contest.ContestId })'>Submit Entry</a>
+                        }
+                        else
+                        {
+                            <a class="btn-contest btn-edit" href='@Url.Action("EditSubmission", "Contest", new { submissionId = userSubmission.SubmissionId })'>Edit Submission</a>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">Login to view details</span>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info no-contest">No ongoing contests found.</div>
+        }
+
+        <!-- Upcoming Contests -->
+        <h3 class="contest-subheading">Upcoming Contests (@upcomingContests.Count)</h3>
+        @if (upcomingContests.Any())
+        {
+            @foreach (var contest in upcomingContests)
+            {
+                <div class="contest-card upcoming-contest">
+                    <h4 class="contest-title">@contest.ContestName</h4>
+                    <p class="contest-text">@contest.Description</p>
+                    <p class="contest-dates">
+                        Starts: @contest.StartDate.ToString("yyyy-MM-dd HH:mm")<br />
+                        Ends: @contest.EndDate.ToString("yyyy-MM-dd HH:mm")
+                    </p>
+                    @if (userId != null)
+                    {
+                        <a class="btn-contest btn-view" href='@Url.Action("DetailUser", "Contest", new { id = contest.ContestId })'>View Details</a>
+                        <span class="text-muted" style="margin-left:10px;">Submission not available</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Login to view details</span>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info no-contest">No upcoming contests found.</div>
+        }
+    </div>
+</div>
+
+<!-- CSS phong cách "sắt đỏ – xanh" và cân đối -->
+<style>
+
+
+    /* Container chứa nội dung chính, căn giữa */
+    .contest-container {
+        background-color: rgba(255, 248, 240, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Tiêu đề chính */
+    .contest-heading {
+        font-size: 36px;
+        color: #8B0000; /* Đỏ sắt */
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+        text-align: center;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+    }
+
+    /* Tiêu đề phụ */
+    .contest-subheading {
+        font-size: 24px;
+        color: #6d4c41;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    /* Card cho mỗi cuộc thi */
+    .contest-card {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+        text-align: center;
+    }
+
+        .contest-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+    /* Ongoing contest: bo trái đỏ sắt */
+    .ongoing-contest {
+        border-left: 8px solid #8B0000;
+    }
+
+    /* Upcoming contest: bo trái xanh đậm */
+    .upcoming-contest {
+        border-left: 8px solid #2E8B57;
+    }
+
+    .contest-title {
+        font-size: 20px;
+        color: #6d4c41;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .contest-text {
+        font-size: 16px;
+        color: #5a5a5a;
+        margin-bottom: 10px;
+    }
+
+    .contest-dates {
+        font-size: 14px;
+        color: #616161;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+
+    .no-contest {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+        font-style: italic;
+    }
+
+    /* Nút chung cho contest */
+    .btn-contest {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: transform 0.3s;
+        margin-right: 5px;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-contest:hover {
+            transform: scale(1.05);
+        }
+
+    /* Nút "View Details" */
+    .btn-view {
+        background-color: #8B0000; /* Đỏ sắt */
+    }
+
+    /* Nút "Submit Entry" */
+    .btn-submit {
+        background-color: #2E8B57; /* Xanh lá đậm */
+    }
+
+    /* Nút "Edit Submission" */
+    .btn-edit {
+        background-color: #fbc02d; /* Vàng */
+        color: #fff;
+    }
+</style>

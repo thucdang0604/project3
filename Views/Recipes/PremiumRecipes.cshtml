@@ -1,0 +1,343 @@
+﻿@model IEnumerable<JamesThewProject.Models.Recipe>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Premium Recipes";
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+    var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId");
+    Layout = userRole == "Admin" ? "~/Views/Shared/_AdminLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+
+    var query = HttpContextAccessor.HttpContext?.Request.Query;
+    var initialSort = query["sortOrder"].ToString();
+    if (string.IsNullOrEmpty(initialSort))
+    {
+        initialSort = "title_asc";
+    }
+}
+
+<!-- Search and Sort Form -->
+<form id="searchForm" method="get" action="@Url.Action("PremiumRecipes", "Recipes")" class="mb-4 d-flex align-items-center gap-2">
+    <input type="text" id="searchString" name="searchString"
+           value="@query["searchString"]"
+           placeholder="Search for recipes..."
+           class="form-control" style="max-width:300px;" />
+    <button type="button" id="toggleSort" class="btn btn-secondary">
+        @if (initialSort == "title_desc")
+        {
+            @:Sort: Z-A
+        }
+        else
+        {
+            @:Sort: A-Z
+        }
+    </button>
+</form>
+
+<!-- Container hiển thị danh sách recipes -->
+<div id="premiumRecipesContainer" class="container mt-4">
+    <h2>Premium Recipes</h2>
+    <div class="row">
+        @if (Model.Any())
+        {
+            foreach (var recipe in Model)
+            {
+                if (recipe.IsPremium && !recipe.IsHidden)
+                {
+                    <div class="col-md-4 mb-4 d-flex">
+                        <div class="recipe-card card flex-fill d-flex flex-column">
+                            @if (!string.IsNullOrEmpty(recipe.ImageUrl))
+                            {
+                                <img src="@recipe.ImageUrl"
+                                     alt="@recipe.Title"
+                                     class="card-img-top"
+                                     style="height:200px;object-fit:cover;" />
+                            }
+                            <div class="card-body d-flex flex-column flex-grow-1">
+                                <h5 class="card-title">@recipe.Title</h5>
+                                @if (!string.IsNullOrEmpty(recipe.Description))
+                                {
+                                    <p class="card-text">@recipe.Description</p>
+                                }
+                                @{
+                                    double avgRating = recipe.AverageRating;
+                                    int fullStars = (int)Math.Floor(avgRating);
+                                    int emptyStars = 5 - fullStars;
+                                }
+                                <div class="mb-2">
+                                    <strong>Rating:</strong>
+                                    @for (int i = 0; i < fullStars; i++)
+                                    {
+                                        <i class="bi bi-star-fill" style="color:gold;"></i>
+                                    }
+                                    @for (int i = 0; i < emptyStars; i++)
+                                    {
+                                        <i class="bi bi-star" style="color:gold;"></i>
+                                    }
+                                </div>
+                                <div class="mt-auto">
+                                    <a href="@Url.Action("Details", "Recipes", new { id = recipe.RecipeId })"
+                                       class="btn-view"
+                                       title="View Details">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    @if (userId != null)
+                                    {
+                                        <form method="post"
+                                              action="@Url.Action("AddToFavorites", "Recipes")"
+                                              style="display:inline;">
+                                            <input type="hidden" name="recipeId" value="@recipe.RecipeId" />
+                                            <button type="submit" class="btn-favorite" title="Add to Favorites">
+                                                <i class="bi bi-heart-fill"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center">No premium recipes available at the moment.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- jQuery và Script AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var currentSortOrder = '@initialSort';
+
+    function loadPremiumRecipes() {
+        var searchString = $("#searchString").val();
+        $.ajax({
+            url: '@Url.Action("PremiumRecipes", "Recipes")',
+            data: { searchString: searchString, sortOrder: currentSortOrder },
+            type: 'GET',
+            success: function(result) {
+                var newContent = $(result).find("#premiumRecipesContainer").html();
+                $("#premiumRecipesContainer").html(newContent);
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + error);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $("#searchString").on("keyup", function(){
+            loadPremiumRecipes();
+        });
+
+        $("#toggleSort").on("click", function(){
+            if(currentSortOrder === "title_asc") {
+                currentSortOrder = "title_desc";
+                $(this).text("Sort: Z-A");
+            } else {
+                currentSortOrder = "title_asc";
+                $(this).text("Sort: A-Z");
+            }
+            loadPremiumRecipes();
+        });
+
+        $("#searchForm").on("submit", function(e){
+            e.preventDefault();
+            loadPremiumRecipes();
+        });
+    });
+</script>
+
+<style>
+    /* Tông màu chủ đạo: Đỏ sẫm (#8B0000) và Xanh lá đậm (#2E8B57) */
+
+    /* Text gradient (nếu cần) */
+    .text-gradient {
+        background: linear-gradient(90deg, #8B0000, #2E8B57);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Nút Add New Recipe */
+    .btn-add-new {
+        background: linear-gradient(90deg, #8B0000, #2E8B57);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .btn-add-new:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+            color: white;
+        }
+
+    /* Search Input */
+    .search-input {
+        padding: 12px 40px 12px 15px;
+        border: 2px solid #8B0000;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+        .search-input:focus {
+            border-color: #2E8B57;
+            box-shadow: 0 0 5px rgba(46, 139, 87, 0.5);
+            outline: none;
+        }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #8B0000;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+        .search-icon:hover {
+            color: #2E8B57;
+        }
+
+    /* Sort Select */
+    .sort-select {
+        padding: 12px;
+        border: 2px solid #8B0000;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        transition: border-color 0.3s ease;
+    }
+
+        .sort-select:focus {
+            border-color: #2E8B57;
+            box-shadow: 0 0 5px rgba(46, 139, 87, 0.5);
+            outline: none;
+        }
+
+    /* Recipe Card */
+    .recipe-card {
+        background: url('/image/menu2.jpg') no-repeat center center;
+        background-size: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        padding: 15px;
+        transition: 0.3s ease-in-out;
+        overflow: hidden;
+        border: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .recipe-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+    /* Ảnh recipe */
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    /* Nền trắng mờ cho nội dung */
+    .recipe-card .card-body {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        padding: 15px;
+        color: #333;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Tiêu đề Recipe */
+    .card-title {
+        font-size: 1.25rem;
+        color: #8B0000;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    /* Nút "View Details" */
+    .btn-view {
+        background-color: #8B0000;
+        color: #fff;
+        padding: 8px 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-right: 5px;
+        border: none;
+    }
+
+        .btn-view:hover {
+            background-color: #2E8B57;
+            transform: scale(1.05);
+            color: #fff;
+        }
+
+    /* Nút "Add to Favorites" */
+    .btn-favorite {
+        background-color: #2E8B57;
+        color: #fff;
+        padding: 8px 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: 0.3s;
+        border: none;
+    }
+
+        .btn-favorite:hover {
+            background-color: #8B0000;
+            transform: scale(1.05);
+        }
+
+    /* H2 chung cho trang */
+    h2 {
+        text-align: center;
+        color: #8B0000;
+        margin-bottom: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+    }
+
+    /* Nút "Sort: A-Z" */
+    .btn-secondary {
+        background-color: #2E8B57;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 15px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #8B0000;
+            transform: scale(1.05);
+            color: #fff;
+        }
+</style>

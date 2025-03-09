@@ -1,0 +1,46 @@
+﻿@model JamesThewProject.Models.RecipeComment
+@{
+    ViewData["Title"] = "Edit Comment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Edit Comment</h2>
+
+    <form method="post" asp-action="EditComment" asp-controller="Admin">
+        @Html.AntiForgeryToken()
+
+        <!-- Gửi ID lên bằng hidden input -->
+        <input type="hidden" name="id" value="@Model.CommentId" />
+
+        <div class="mb-3">
+            <label class="form-label">User Email</label>
+            <input type="text" class="form-control" value="@Model.User?.Email" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Recipe Title</label>
+            <input type="text" class="form-control" value="@Model.Recipe?.Title" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Comment Text</label>
+            <!-- Hiển thị textarea ở chế độ disabled -->
+            <textarea class="form-control" disabled rows="4">@Model.CommentText</textarea>
+            <!-- Gửi giá trị thông qua hidden field -->
+            <input type="hidden" name="CommentText" value="@Model.CommentText" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Visibility</label>
+            <!-- name="IsVisible" để POST binding theo tham số bool IsVisible -->
+            <select class="form-select" name="IsVisible">
+                <option value="true" @(Model.IsVisible ? "selected" : "")>Visible</option>
+                <option value="false" @(!Model.IsVisible ? "selected" : "")>Hidden</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="ManageComments" asp-controller="Admin" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

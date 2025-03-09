@@ -1,0 +1,22 @@
+﻿@model JamesThewProject.Models.Ingredient
+
+@{
+    ViewData["Title"] = "Add New Ingredient";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Add New Ingredient</h2>
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Ingredient Name</label>
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Enter ingredient name" required value="@Model.Name" />
+        </div>
+        <div class="mb-3">
+            <label for="DefaultUnit" class="form-label">Default Unit</label>
+            <input type="text" id="DefaultUnit" name="DefaultUnit" class="form-control"value="@Model.DefaultUnit" />
+        </div>
+        <button type="submit" class="btn btn-success">Add Ingredient</button>
+        <a class="btn btn-secondary" href="@Url.Action("Manage", "Ingredient")">Cancel</a>
+    </form>
+</div>

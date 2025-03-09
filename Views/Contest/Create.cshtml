@@ -1,0 +1,139 @@
+﻿@model JamesThewProject.Models.Contest
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Create Contest";
+        // Lấy thời điểm hiện tại
+    var now = DateTime.Now;
+    // Nếu Model chưa có StartDate/EndDate, đặt mặc định:
+    //   StartDate = now + 6 giờ
+    //   EndDate   = now + 7 ngày
+    var startDateValue = (Model.StartDate == DateTime.MinValue)
+        ? now.AddHours(6)
+        : Model.StartDate;
+    var endDateValue = (Model.EndDate == DateTime.MinValue)
+        ? now.AddDays(7)
+        : Model.EndDate;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Create Contest</h2>
+    <form asp-action="Create" method="post" id="createContestForm" enctype="multipart/form-data">
+        <!-- Contest Name -->
+        <div class="form-group">
+            <label for="ContestName">Contest Name</label>
+            <input type="text" id="ContestName" name="ContestName" class="form-control"
+                   value="@Model.ContestName" required />
+            @if (ViewData.ModelState["ContestName"]?.Errors.Count > 0)
+            {
+                foreach (var error in ViewData.ModelState["ContestName"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>
+                }
+            }
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea id="Description" name="Description" class="form-control" rows="4" required>@Model.Description</textarea>
+            @if (ViewData.ModelState["Description"]?.Errors.Count > 0)
+            {
+                foreach (var error in ViewData.ModelState["Description"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>
+                }
+            }
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+            <label for="StartDate">Start Date</label>
+            <input type="datetime-local"
+                   id="StartDate"
+                   name="StartDate"
+                   class="form-control"
+                   value="@startDateValue.ToString("yyyy-MM-ddTHH:mm")"
+                   required />
+            @if (ViewData.ModelState["StartDate"]?.Errors.Count > 0)
+            {
+                foreach (var error in ViewData.ModelState["StartDate"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>
+                }
+            }
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+            <label for="EndDate">End Date</label>
+            <input type="datetime-local"
+                   id="EndDate"
+                   name="EndDate"
+                   class="form-control"
+                   value="@endDateValue.ToString("yyyy-MM-ddTHH:mm")"
+                   required />
+            @if (ViewData.ModelState["EndDate"]?.Errors.Count > 0)
+            {
+                foreach (var error in ViewData.ModelState["EndDate"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>
+                }
+            }
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+            <label for="IsActive">Status</label>
+            <select id="IsActive" name="IsActive" class="form-control" required>
+                <option value="true" @(Model.IsActive ? "selected" : "")>Active</option>
+                <option value="false" @(!Model.IsActive ? "selected" : "")>Inactive</option>
+            </select>
+            @if (ViewData.ModelState["IsActive"]?.Errors.Count > 0)
+            {
+                foreach (var error in ViewData.ModelState["IsActive"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>
+                }
+            }
+        </div>
+        <button type="submit" class="btn btn-primary">Create Contest</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('createContestForm').addEventListener('submit', function (e) {
+            var startDateInput = document.getElementById('StartDate');
+            var endDateInput = document.getElementById('EndDate');
+            var imageInput = document.getElementById('ImageFile');
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(endDateInput.value);
+            var now = new Date();
+
+            // Kiểm tra: Start Date phải sau thời điểm hiện tại (dù chỉ 1 phút cũng được)
+            if (startDate <= now) {
+                e.preventDefault();
+                alert("Start Date must be after the current time.");
+                startDateInput.focus();
+                return false;
+            }
+
+            // Kiểm tra: End Date phải sau Start Date
+            if (endDate <= startDate) {
+                e.preventDefault();
+                alert("End Date must be after Start Date.");
+                endDateInput.focus();
+                return false;
+            }
+
+            // Kiểm tra: phải chọn file
+            if (imageInput.files.length === 0) {
+                e.preventDefault();
+                alert("Please upload an image.");
+                imageInput.focus();
+                return false;
+            }
+        });
+    </script>
+}

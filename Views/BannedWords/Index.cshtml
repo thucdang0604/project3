@@ -1,0 +1,55 @@
+﻿@model IEnumerable<JamesThewProject.Models.BannedWord>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Manage Banned Words";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Đảm bảo layout đã tồn tại
+    var query = HttpContextAccessor.HttpContext.Request.Query;
+}
+
+<div class="container mt-4">
+    <h2>Manage Banned Words</h2>
+    <div class="col-md-4 text-md-right mt-2 mt-md-0">
+        <a class="btn btn-success" href="@Url.Action("Create", "BannedWords")">
+            <i class="fas fa-plus"></i> Create New Contest
+        </a>
+    </div>
+
+    <!-- Form tìm kiếm -->
+    <form method="get" action="@Url.Action("Index", "BannedWords")" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="searchString" class="form-control" placeholder="Search banned words..." value="@(query["searchString"])" />
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th style="width:150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var word in Model)
+                {
+                    <tr>
+                        <td>@word.Word</td>
+                        <td>
+                            <a href="@Url.Action("Delete", "BannedWords", new { id = word.BannedWordId })" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center">No banned words found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,64 @@
+﻿@model JamesThewProject.Models.Announcement
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Announcement";
+}
+
+<h1>Edit Announcement</h1>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form action="/Announcement/Edit" method="post" enctype="multipart/form-data" id="editAnnouncementForm">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" required />
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" class="form-control" rows="4" required>@Model.Description</textarea>
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="PostedDate">Posted Date</label>
+        <input type="date" id="PostedDate" name="PostedDate" class="form-control"
+               value="@Model.PostedDate.ToString("yyyy-MM-dd")" required />
+        @Html.ValidationMessageFor(model => model.PostedDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="IsDisplayed">Display Status</label>
+        <select id="IsDisplayed" name="IsDisplayed" class="form-control">
+            <option value="true" @(Model.IsDisplayed ? "selected" : "")>Yes</option>
+            <option value="false" @(!Model.IsDisplayed ? "selected" : "")>No</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.IsDisplayed, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="ImageFile">Upload New Image (optional)</label>
+        <input type="file" id="ImageFile" name="ImageFile" class="form-control-file" accept="image/*" />
+        @Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <div class="form-group">
+            <label>Current Image:</label>
+            <br />
+            <img src="@Model.ImageUrl" alt="Announcement Image" style="max-width:150px;" />
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="/Announcement/ManageAnnouncements" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

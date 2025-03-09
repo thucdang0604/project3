@@ -1,0 +1,228 @@
+﻿@model IEnumerable<JamesThewProject.Models.Recipe>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("UserRole") ?? "User";
+
+    // Nếu userRole là "Admin" hoặc "Manager" thì dùng _AdminLayout
+    Layout = (userRole == "Admin" || userRole == "Manager")
+        ? "~/Views/Shared/_AdminLayout.cshtml"
+        : "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["Title"] = "Manage Recipes";
+
+    var query = Context.Request.Query;
+}
+
+<div class="container py-5">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold text-gradient">Manage Recipes</h1>
+        <a class="btn btn-add-new" href="@Url.Action("Create", "Recipes")">
+            <i class="bi bi-plus-circle me-1"></i> Create New Recipe
+        </a>
+    </div>
+
+    <!-- Form Search & Sort -->
+    <form method="get" action="@Url.Action("ManageRecipes", "Recipes")" class="mb-5">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6 col-lg-4 position-relative">
+                <input type="text" name="searchString" value="@(query["searchString"])" placeholder="Search recipes..." class="form-control search-input" />
+                <span class="search-icon" onclick="this.closest('form').submit();">
+                    <i class="bi bi-search"></i>
+                </span>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <select name="sortOrder" class="form-control sort-select" onchange="this.form.submit();">
+                    <option value="">Sort by</option>
+                    <option value="title_asc" @(query["sortOrder"] == "title_asc" ? "selected" : "")>Title (A-Z)</option>
+                    <option value="title_desc" @(query["sortOrder"] == "title_desc" ? "selected" : "")>Title (Z-A)</option>
+                    <option value="date_asc" @(query["sortOrder"] == "date_asc" ? "selected" : "")>Date (Oldest first)</option>
+                    <option value="date_desc" @(query["sortOrder"] == "date_desc" ? "selected" : "")>Date (Newest first)</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <!-- Recipes Grid -->
+    @if (Model?.Any() == true)
+    {
+        <div class="row g-4">
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card recipe-card shadow-sm h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center mb-3">
+                                @if (!string.IsNullOrEmpty(recipe.ImageUrl))
+                                {
+                                    <img src="@recipe.ImageUrl" alt="Recipe Image" class="recipe-image me-3" />
+                                }
+                                <div>
+                                    <h5 class="card-title mb-1">@recipe.Title</h5>
+                                    <small class="text-muted">Creator: @(recipe.Creator != null ? recipe.Creator.Email : "Unknown")</small>
+                                </div>
+                            </div>
+                            <p class="card-text mb-2">
+                                <strong>Servings:</strong> @recipe.Servings<br>
+                                <strong>Premium:</strong> @(recipe.IsPremium ? "Yes" : "No")<br>
+                                <strong>Hidden:</strong> @(recipe.IsHidden ? "Yes" : "No")<br>
+                                <strong>Created:</strong> @recipe.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                            </p>
+                            <!-- Hiển thị Rating bằng biểu tượng sao -->
+                            @{
+                                double avgRating = recipe.AverageRating;
+                                int fullStars = (int)Math.Floor(avgRating);
+                                int emptyStars = 5 - fullStars;
+                            }
+                            <div class="mb-3">
+                                <strong>Rating:</strong>
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <i class="bi bi-star-fill" style="color: gold;"></i>
+                                }
+                                @for (int i = 0; i < emptyStars; i++)
+                                {
+                                    <i class="bi bi-star" style="color: gold;"></i>
+                                }
+                            </div>
+                            <div class="mt-auto d-flex gap-2">
+                                <a class="btn btn-primary btn-sm flex-grow-1" href='@Url.Action("Edit", "Recipes", new { id = recipe.RecipeId })'>
+                                    <i class="bi bi-pencil me-1"></i> Edit
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4 class="text-muted">No recipes found.</h4>
+            <p>Create a new recipe to get started!</p>
+        </div>
+    }
+</div>
+
+<style>
+    /* Gradient Text */
+    .text-gradient {
+        background: linear-gradient(90deg, #1e3c72, #2a69ac);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Add New Button */
+    .btn-add-new {
+        background: linear-gradient(90deg, #1e3c72, #2a69ac);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .btn-add-new:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+            color: white;
+        }
+
+    /* Search Input */
+    .search-input {
+        padding: 12px 40px 12px 15px;
+        border: 2px solid #1e3c72;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+        .search-input:focus {
+            border-color: #2a69ac;
+            box-shadow: 0 0 5px rgba(42, 105, 172, 0.5);
+            outline: none;
+        }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #1e3c72;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+        .search-icon:hover {
+            color: #2a69ac;
+        }
+
+    /* Sort Select */
+    .sort-select {
+        padding: 12px;
+        border: 2px solid #1e3c72;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        transition: border-color 0.3s ease;
+    }
+
+        .sort-select:focus {
+            border-color: #2a69ac;
+            box-shadow: 0 0 5px rgba(42, 105, 172, 0.5);
+            outline: none;
+        }
+
+    /* Recipe Card */
+    .recipe-card {
+        border: none;
+        border-radius: 15px;
+        background: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+    .recipe-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #1e3c72;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #1e3c72;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #1e3c72, #2a69ac);
+        border: none;
+        border-radius: 10px;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        border: none;
+        border-radius: 10px;
+    }
+</style>
+
+@section Scripts {
+    <!-- Section empty to avoid script errors -->
+}

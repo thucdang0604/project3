@@ -1,0 +1,112 @@
+﻿@model JamesThewProject.Models.User
+
+@{
+    ViewData["Title"] = "Upgrade Membership";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .profile-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff8f0;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-family: 'Merriweather', serif;
+        color: #4a4a4a;
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .profile-header h2 {
+            font-size: 28px;
+            color: #d35400;
+            text-transform: uppercase;
+        }
+
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid #d35400;
+    }
+
+    .profile-details p, .membership-info p {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .btn-custom {
+        background-color: #e67e22;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 30px;
+        transition: 0.3s ease-in-out;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+        .btn-custom:hover {
+            background-color: #d35400;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .membership-info {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #c0392b;
+        text-align: center;
+    }
+
+    .membership-plan {
+        background: #ffedd5;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: 0.3s ease-in-out;
+    }
+
+        .membership-plan:hover {
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="container mt-4">
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>Upgrade to Premium</h2>
+        </div>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger text-center">@TempData["ErrorMessage"]</div>
+        }
+
+        <div class="row">
+            @foreach (var plan in ViewBag.Plans)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="membership-plan">
+                        <h4 class="text-center text-uppercase" style="color:#d35400;">@plan.PlanName</h4>
+                        <p>@plan.Description</p>
+                        <p class="fw-bold">$@plan.Price</p>
+                        <p>Duration: @plan.DurationInDays days</p>
+                        <form asp-action="UpgradeMembership" method="post">
+                            <input type="hidden" name="planId" value="@plan.PlanId" />
+                            <button type="submit" class="btn btn-custom">Upgrade Now</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

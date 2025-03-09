@@ -1,0 +1,70 @@
+﻿@model IEnumerable<JamesThewProject.Models.RecipeComment>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Manage Comments";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Đảm bảo layout tồn tại
+    var query = Context.Request.Query;
+}
+
+<div class="container mt-4">
+    <h2>Manage Comments</h2>
+
+    <!-- Search & Sort Form -->
+    <form method="get" action="@Url.Action("ManageComments", "Admin")" class="mb-3">
+        <div class="form-group">
+            <input type="text" name="searchString" value="@(query["searchString"])" placeholder="Search comments..." class="form-control" />
+        </div>
+        <div class="form-group mt-2">
+            <select name="sortOrder" class="form-control">
+                <option value="">Sort by</option>
+                <option value="date_asc" @(query["sortOrder"] == "date_asc" ? "selected" : "")>Created Date (Oldest first)</option>
+                <option value="date_desc" @(query["sortOrder"] == "date_desc" ? "selected" : "")>Created Date (Newest first)</option>
+                <option value="visible_asc" @(query["sortOrder"] == "visible_asc" ? "selected" : "")>Visibility (Hidden first)</option>
+                <option value="visible_desc" @(query["sortOrder"] == "visible_desc" ? "selected" : "")>Visibility (Visible first)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Recipe Title</th>
+                <th>Comment Text</th>
+                <th>Visibility</th>
+                <th>Created At</th>
+                <th style="width:150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var cmt in Model)
+                {
+                    <tr>
+                        <td>@(cmt.User?.Email ?? "N/A")</td>
+                        <td>@(cmt.Recipe?.Title ?? "N/A")</td>
+                        <td>@cmt.CommentText</td>
+                        <td>@(cmt.IsVisible ? "Visible" : "Hidden")</td>
+                        <td>@cmt.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm"
+                               href='@Url.Action("EditComment", "Admin", new { id = cmt.CommentId })'>
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No comments found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

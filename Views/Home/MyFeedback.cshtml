@@ -1,0 +1,82 @@
+﻿@model IEnumerable<JamesThewProject.Models.Feedback>
+
+@{
+    ViewData["Title"] = "My Feedback";
+}
+
+<div class="container mt-4">
+    <h2 class="page-title">My Feedback</h2>
+
+    <table class="table feedback-table">
+        <thead>
+            <tr>
+                <th>Feedback</th>
+                <th>Response</th>
+                <th>Status</th>
+                <th>Submitted At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fb in Model)
+            {
+                <tr>
+                    <td>@fb.Content</td>
+                    <td>@fb.Response</td>
+                    <td>@(fb.IsRead ? "Read" : "Unread")</td>
+                    <td>@fb.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* Container chính */
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Tiêu đề trang */
+    .page-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        color: #8B0000; /* Màu đỏ sẫm */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #2980B9; /* Accent xanh */
+        padding-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    /* Bảng Feedback */
+    .feedback-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .feedback-table thead th {
+            background: linear-gradient(45deg, #8B0000, #2980B9);
+            color: #fff;
+            padding: 12px;
+            text-align: left;
+            border: none;
+        }
+
+        .feedback-table tbody td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .feedback-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .feedback-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+</style>

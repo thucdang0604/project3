@@ -1,0 +1,205 @@
+﻿@model JamesThewProject.Models.PaymentViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Payment Details";
+
+    // Giả sử bạn có plan, currentExpiry,...
+    var plan = ViewBag.Plan as JamesThewProject.Models.SubscriptionPlan;
+    DateTime? currentExpiry = ViewBag.CurrentExpiry as DateTime?;
+}
+
+<div class="payment-page mt-4">
+    <div class="payment-container">
+        <h2 class="text-center page-title">Payment Details</h2>
+
+        @if (currentExpiry != null && currentExpiry > DateTime.Now)
+        {
+            <div class="alert alert-info">
+                Your current Premium membership expires on: @currentExpiry.Value.ToString("dd/MM/yyyy").<br />
+                Purchasing a new plan will extend your membership beyond that date.
+            </div>
+        }
+
+        @if (plan != null)
+        {
+            <div class="mb-3">
+                <p><strong>Plan Details:</strong></p>
+                <p>Plan Name: @plan.PlanName</p>
+                <p>Price: @plan.Price.ToString("C")</p>
+                <p>Duration: @plan.DurationInDays days</p>
+            </div>
+        }
+
+        <form asp-action="Payment" method="post" id="paymentForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="planId" value="@plan.PlanId" />
+
+            <div class="mb-3">
+                <label for="CardHolderName" class="form-label">Card Holder Name</label>
+                <input type="text" id="CardHolderName" name="CardHolderName" class="form-control" required />
+                @Html.ValidationMessageFor(model => model.CardHolderName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                <label for="CardNumber" class="form-label">Card Number</label>
+                <input type="text" id="CardNumber" name="CardNumber" class="form-control"
+                       placeholder="16 digits" required maxlength="16" pattern="\d{16}" />
+                @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Row chung cho Tháng, Năm, CVV -->
+            <div class="row">
+                <!-- Expiry Month (col-4) -->
+                <div class="col-md-4 mb-3">
+                    <label for="ExpiryMonth" class="form-label">Expiry Month</label>
+                    <!-- Dùng type="text" + pattern => 2 chữ số, 1-12 -->
+                    <input type="text"
+                           id="ExpiryMonth"
+                           name="ExpiryMonth"
+                           class="form-control expiry-input"
+                           placeholder="MM"
+                           required
+                           maxlength="2"
+                           pattern="^(0[1-9]|1[0-2])$"
+                           title="Month must be 01-12" />
+                    @Html.ValidationMessage("ExpiryMonth", "", new { @class = "text-danger" })
+                </div>
+                <!-- Expiry Year (col-4) -->
+                <div class="col-md-4 mb-3">
+                    <label for="ExpiryYear" class="form-label">Expiry Year</label>
+                    <!-- 4 chữ số -->
+                    <input type="text"
+                           id="ExpiryYear"
+                           name="ExpiryYear"
+                           class="form-control expiry-input"
+                           placeholder="YYYY"
+                           required
+                           maxlength="4"
+                           pattern="^\d{4}$"
+                           title="Year must be 4 digits" />
+                    @Html.ValidationMessage("ExpiryYear", "", new { @class = "text-danger" })
+                </div>
+                <!-- CVV (col-4) -->
+                <div class="col-md-4 mb-3">
+                    <label for="CVV" class="form-label">CVV</label>
+                    <input type="text"
+                           id="CVV"
+                           name="CVV"
+                           class="form-control"
+                           placeholder="3 digits"
+                           required maxlength="3"
+                           pattern="^\d{3}$"
+                           title="CVV must be 3 digits" />
+                    @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="BillingAddress" class="form-label">Billing Address</label>
+                <textarea id="BillingAddress" name="BillingAddress" class="form-control" rows="2" required></textarea>
+                @Html.ValidationMessageFor(model => model.BillingAddress, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-submit">Submit Payment</button>
+            <a href='@Url.Action("UpgradeMembership", "Account")' class="btn btn-cancel">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(e){
+            // Additional client-side checks if needed
+        });
+    </script>
+}
+
+<style>
+    /*
+           Lớp riêng .payment-page, .payment-container
+           => không override layout chung
+        */
+    .payment-page {
+        /* background if needed */
+    }
+
+    .payment-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .page-title {
+        font-size: 28px;
+        text-align: center;
+        font-weight: bold;
+        color: #8B0000; /* Đỏ sẫm */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #8B0000;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+
+    /* Expiry input => xanh – đỏ, nhỏ gọn */
+    .expiry-input {
+        border: 2px solid #2E8B57; /* Xanh lá đậm */
+        color: #8B0000; /* Đỏ sẫm */
+        font-size: 14px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    /* Buttons */
+    .btn-submit {
+        background-color: #8B0000;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        margin-right: 10px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: #a52a2a;
+            transform: scale(1.05);
+        }
+
+    .btn-cancel {
+        background-color: #2E8B57;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        text-decoration: none;
+    }
+
+        .btn-cancel:hover {
+            background-color: #228B22;
+            transform: scale(1.05);
+        }
+</style>

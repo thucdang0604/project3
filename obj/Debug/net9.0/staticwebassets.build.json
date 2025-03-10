@@ -1,0 +1,702 @@
+{
+  "Version": 1,
+  "Hash": "d/cuOECbzl7ZsUQcR+ue4X4o/EtPjru9KEMIWS20PeM=",
+  "Source": "JamesThewProject",
+  "BasePath": "_content/JamesThewProject",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "JamesThewProject\\wwwroot",
+      "Source": "JamesThewProject",
+      "ContentRoot": "D:\\DOANKY3\\GIP\\project3\\wwwroot\\",
+      "BasePath": "_content/JamesThewProject",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\f1484v8rf9-n9p445r2us.gz",
+      "SourceId": "JamesThewProject",
+      "SourceType": "Computed",
+      "ContentRoot": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/JamesThewProject",
+      "RelativePath": "JamesThewProject#[.{fingerprint=n9p445r2us}]?.styles.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "6ffhiz54ar",
+      "Integrity": "rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css"
+    },
+    {
+      "Identity": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\vwyuqjyfdd-n9p445r2us.gz",
+      "SourceId": "JamesThewProject",
+      "SourceType": "Computed",
+      "ContentRoot": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/JamesThewProject",
+      "RelativePath": "JamesThewProject#[.{fingerprint=n9p445r2us}]!.bundle.scp.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "6ffhiz54ar",
+      "Integrity": "rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css",
+      "SourceId": "JamesThewProject",
+      "SourceType": "Computed",
+      "ContentRoot": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\",
+      "BasePath": "_content/JamesThewProject",
+      "RelativePath": "JamesThewProject#[.{fingerprint}]?.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "Fingerprint": "n9p445r2us",
+      "Integrity": "Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css"
+    },
+    {
+      "Identity": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css",
+      "SourceId": "JamesThewProject",
+      "SourceType": "Computed",
+      "ContentRoot": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\",
+      "BasePath": "_content/JamesThewProject",
+      "RelativePath": "JamesThewProject#[.{fingerprint}]!.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "n9p445r2us",
+      "Integrity": "Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "JamesThewProject.bundle.scp.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\vwyuqjyfdd-n9p445r2us.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.bundle.scp.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.bundle.scp.css.gz",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\vwyuqjyfdd-n9p445r2us.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.bundle.scp.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\vwyuqjyfdd-n9p445r2us.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.bundle.scp.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.bundle.scp.css.gz",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\vwyuqjyfdd-n9p445r2us.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.bundle.scp.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\f1484v8rf9-n9p445r2us.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css.gz",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\f1484v8rf9-n9p445r2us.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\f1484v8rf9-n9p445r2us.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\bundle\\JamesThewProject.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css.gz",
+      "AssetFile": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\compressed\\f1484v8rf9-n9p445r2us.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\DOANKY3\\GIP\\project3\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\JamesThewProject.bundle.scp.css",
+      "PackagePath": "staticwebassets\\JamesThewProject.n9p445r2us.bundle.scp.css"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.JamesThewProject.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.JamesThewProject.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.JamesThewProject.props",
+      "PackagePath": "build\\JamesThewProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.JamesThewProject.props",
+      "PackagePath": "buildMultiTargeting\\JamesThewProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.JamesThewProject.props",
+      "PackagePath": "buildTransitive\\JamesThewProject.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

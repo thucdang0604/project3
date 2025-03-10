@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using JamesThewProject.Data;
 using JamesThewProject.Models;
 using JamesThewProject.Services;
+using JamesThewProject.Helpers;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,6 +12,9 @@ using System.IO;
 using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+
 
 namespace JamesThewProject.Controllers
 {
@@ -19,12 +23,15 @@ namespace JamesThewProject.Controllers
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _environment;
         private readonly IEmailSender _emailSender;
-
-        public AccountController(AppDbContext context, IWebHostEnvironment environment, IEmailSender emailSender)
+        private readonly ILogger<AccountController> _logger;
+        public AccountController(AppDbContext context, IWebHostEnvironment environment, IEmailSender emailSender, ILogger<AccountController> logger)
         {
             _context = context;
             _environment = environment;
             _emailSender = emailSender;
+            _logger = logger;
+            _logger = logger;
+
         }
 
         // GET: /Account/Login
@@ -174,6 +181,7 @@ namespace JamesThewProject.Controllers
         }
 
         // ✅ Hiển thị trang nâng cấp tài khoản
+        // GET: /Account/UpgradeMembership
         [HttpGet]
         public IActionResult UpgradeMembership()
         {
@@ -189,164 +197,55 @@ namespace JamesThewProject.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Nếu đã là Premium, chuyển hướng đến trang công thức cao cấp
             if (user.MembershipType == "Premium" && user.MembershipExpiry.HasValue && user.MembershipExpiry.Value > DateTime.Now)
             {
                 return RedirectToAction("PremiumRecipes", "Recipes");
             }
 
-            // Load danh sách gói nâng cấp từ database
             var plans = _context.SubscriptionPlans.Where(p => p.IsActive).ToList();
             ViewBag.Plans = plans;
 
             return View(user);
         }
-      [HttpPost]
-public IActionResult UpgradeMembership(int planId)
-{
-    int? userId = HttpContext.Session.GetInt32("UserId");
-    if (userId == null)
-    {
-        return RedirectToAction("Login");
-    }
 
-    var user = _context.Users.Find(userId);
-    if (user == null)
-    {
-        return RedirectToAction("Login");
-    }
-
-    // Nếu đã là Premium và chưa hết hạn
-    if (user.MembershipType == "Premium" && user.MembershipExpiry.HasValue && user.MembershipExpiry.Value > DateTime.Now)
-    {
-        TempData["ErrorMessage"] = $"Your Premium membership is active until {user.MembershipExpiry.Value:yyyy-MM-dd}.";
-        return RedirectToAction("Profile", "Account");
-    }
-
-    // Lấy gói nâng cấp
-    var plan = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
-    if (plan == null)
-    {
-        TempData["ErrorMessage"] = "Selected plan is not available.";
-        return RedirectToAction("UpgradeMembership");
-    }
-
-    // Tính thời hạn gói
-    DateTime startDate = DateTime.Now;
-    DateTime endDate = startDate.AddDays(plan.DurationInDays);
-
-    // Cập nhật thông tin Membership trong bảng Users
-    user.MembershipType = "Premium";
-    user.MembershipExpiry = endDate;
-    user.UpdatedAt = DateTime.Now;
-    _context.Users.Update(user);
-    _context.SaveChanges();
-
-    // Tạo Subscription (lịch sử nâng cấp)
-    var subscription = new Subscription
-    {
-        UserId = user.UserId,
-        PlanId = plan.PlanId,
-        StartDate = startDate,
-        EndDate = endDate,
-        PaymentStatus = "Paid", // hoặc "Pending" tùy logic
-        CreatedAt = DateTime.Now
-    };
-    _context.Subscriptions.Add(subscription);
-    _context.SaveChanges();
-
-    // Cập nhật session nếu cần
-    HttpContext.Session.SetString("MembershipType", "Premium");
-
-    // Gửi email thông báo
-    string subject = "Your Premium Membership is Activated!";
-    string body = $@"<p>Dear {(user.FullName ?? user.Email)},</p>
-                     <p>Your account has been upgraded to Premium.</p>
-                     <p><strong>Plan:</strong> {plan.PlanName}</p>
-                     <p><strong>Price:</strong> ${plan.Price}</p>
-                     <p><strong>Duration:</strong> {plan.DurationInDays} days</p>
-                     <p><strong>Valid until:</strong> {endDate:yyyy-MM-dd}</p>
-                     <p>Thank you for choosing our service.</p>";
-    _emailSender.SendEmailAsync(user.Email, subject, body).Wait();
-
-    // Chuyển hướng đến trang UpgradeSuccess
-    return RedirectToAction("UpgradeSuccess", new { planId = plan.PlanId });
-}
-        // GET: /Account/Payment?planId=...
-        [HttpGet]
-        public IActionResult Payment(int planId)
+        // POST: /Account/UpgradeMembership
+        [HttpPost]
+        public IActionResult UpgradeMembership(int planId)
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
+            {
                 return RedirectToAction("Login");
-
-            var plan = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
-            if (plan == null)
-            {
-                TempData["ErrorMessage"] = "Selected plan is not available.";
-                return RedirectToAction("SubscriptionHistory", "Account");
             }
-
-            // Tạo PaymentViewModel (bạn cần tạo model này)
-            var model = new PaymentViewModel();
-            ViewBag.Plan = plan; // truyền thông tin gói sang view nếu cần hiển thị
-
-            return View(model); // Mặc định sẽ trả về view Payment.cshtml
-        }
-
-        // Ví dụ trong action POST Payment (hoặc UpgradeMembership)
-        [HttpPost]
-        public IActionResult Payment(PaymentViewModel paymentModel, int planId)
-        {
-            if (!ModelState.IsValid)
-            {
-                var planX = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
-                ViewBag.Plan = planX;
-                return View("Payment", paymentModel);
-            }
-
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null) return RedirectToAction("Login", "Account");
 
             var user = _context.Users.Find(userId);
-            if (user == null) return RedirectToAction("Login", "Account");
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (user.MembershipType == "Premium" && user.MembershipExpiry.HasValue && user.MembershipExpiry.Value > DateTime.Now)
+            {
+                TempData["ErrorMessage"] = $"Your Premium membership is active until {user.MembershipExpiry.Value:yyyy-MM-dd}.";
+                return RedirectToAction("Profile", "Account");
+            }
 
             var plan = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
             if (plan == null)
             {
                 TempData["ErrorMessage"] = "Selected plan is not available.";
-                return RedirectToAction("SubscriptionHistory");
+                return RedirectToAction("UpgradeMembership");
             }
 
-            // Giả lập xử lý thanh toán
-            // -------------
-            // Tính logic gia hạn
-            DateTime now = DateTime.Now;
-            DateTime startDate;
-            DateTime endDate;
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = startDate.AddDays(plan.DurationInDays);
 
-            // Nếu user đang có Premium và chưa hết hạn -> cộng thêm
-            if (user.MembershipType == "Premium" && user.MembershipExpiry.HasValue && user.MembershipExpiry.Value > now)
-            {
-                // startDate = ngày hết hạn cũ
-                startDate = user.MembershipExpiry.Value;
-                // endDate = ngày hết hạn cũ + số ngày của gói mới
-                endDate = user.MembershipExpiry.Value.AddDays(plan.DurationInDays);
-            }
-            else
-            {
-                // Nếu user chưa có Premium hoặc đã hết hạn, tính từ hôm nay
-                startDate = now;
-                endDate = now.AddDays(plan.DurationInDays);
-            }
-
-            // Cập nhật user
             user.MembershipType = "Premium";
             user.MembershipExpiry = endDate;
-            user.UpdatedAt = now;
+            user.UpdatedAt = DateTime.Now;
             _context.Users.Update(user);
+            _context.SaveChanges();
 
-            // Tạo Subscription
             var subscription = new Subscription
             {
                 UserId = user.UserId,
@@ -354,28 +253,183 @@ public IActionResult UpgradeMembership(int planId)
                 StartDate = startDate,
                 EndDate = endDate,
                 PaymentStatus = "Paid",
-                CreatedAt = now
+                CreatedAt = DateTime.Now
             };
             _context.Subscriptions.Add(subscription);
             _context.SaveChanges();
 
-            // Cập nhật session
             HttpContext.Session.SetString("MembershipType", "Premium");
 
-            // Gửi email thông báo
-            string subject = "Your Premium Membership is Extended!";
+            string subject = "Your Premium Membership is Activated!";
             string body = $@"<p>Dear {(user.FullName ?? user.Email)},</p>
-                     <p>Your premium membership has been extended.</p>
-                     <p><strong>Plan:</strong> {plan.PlanName}</p>
-                     <p><strong>Price:</strong> ${plan.Price}</p>
-                     <p><strong>Duration:</strong> {plan.DurationInDays} days</p>
-                     <p><strong>New expiry date:</strong> {endDate:yyyy-MM-dd}</p>
-                     <p>Thank you for choosing our service.</p>";
+                             <p>Your account has been upgraded to Premium.</p>
+                             <p><strong>Plan:</strong> {plan.PlanName}</p>
+                             <p><strong>Price:</strong> ${plan.Price}</p>
+                             <p><strong>Duration:</strong> {plan.DurationInDays} days</p>
+                             <p><strong>Valid until:</strong> {endDate:yyyy-MM-dd}</p>
+                             <p>Thank you for choosing our service.</p>";
             _emailSender.SendEmailAsync(user.Email, subject, body).Wait();
 
-            // Chuyển hướng
-            TempData["SuccessMessage"] = "Your membership has been extended successfully.";
             return RedirectToAction("UpgradeSuccess", new { planId = plan.PlanId });
+        }
+        // --- VNPay Integration ---
+
+        // GET: /Account/VnpayPayment?planId=...
+        // GET: /Account/VnpayPayment?planId=...
+
+        [HttpGet]
+        public IActionResult VnpayPayment(int planId)
+        {
+            // Lấy gói nâng cấp
+            var plan = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
+            if (plan == null)
+            {
+                TempData["ErrorMessage"] = "Selected plan is not available.";
+                return RedirectToAction("UpgradeMembership");
+            }
+
+            // Gán cứng các giá trị cấu hình VNPay
+            string vnp_TmnCode = "XHXOSV1S";
+            string vnp_HashSecret = "EVBR12NW84MVQJ4HW1OD1V2IMYHHNRPY";
+            string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+
+            // URL trả về sau khi thanh toán
+            string returnUrl = Url.Action("VnpayReturn", "Account", new { planId = plan.PlanId }, Request.Scheme);
+
+            // Sử dụng múi giờ GMT+7
+            string createDate = DateTime.Now.ToUniversalTime().AddHours(7).ToString("yyyyMMddHHmmss");
+            string expireDate = DateTime.Now.ToUniversalTime().AddHours(7).AddMinutes(15).ToString("yyyyMMddHHmmss");
+
+            // Tạo các tham số mới theo yêu cầu của VNPay
+            string vnp_RequestId = Guid.NewGuid().ToString("N");
+            string vnp_TransactionDate = createDate; // hoặc nếu cần khác, hãy tính riêng
+
+            // Xây dựng dictionary các tham số cần gửi (chú ý: thứ tự không quan trọng cho việc xây dựng query string)
+            Dictionary<string, string> vnpParams = new Dictionary<string, string>
+    {
+        { "vnp_RequestId", vnp_RequestId },
+        { "vnp_Version", "2.1.0" },
+        { "vnp_Command", "pay" },
+        { "vnp_TmnCode", vnp_TmnCode },
+        { "vnp_TxnRef", DateTime.Now.Ticks.ToString() },
+        { "vnp_TransactionDate", vnp_TransactionDate },
+        { "vnp_CreateDate", createDate },
+        { "vnp_IpAddr", HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString() ?? "127.0.0.1" },
+        // vnp_OrderInfo: cần là chuỗi không dấu và không chứa ký tự đặc biệt (loại bỏ dấu hai chấm, v.v.)
+        { "vnp_OrderInfo", VnpayHelper.RemoveDiacritics($"Thanh toan goi Premium {plan.PlanName}").Replace(":", "") },
+        { "vnp_Amount", ((int)(plan.Price * 100)).ToString() },
+        { "vnp_CurrCode", "VND" },
+        { "vnp_Locale", "vn" },
+        { "vnp_OrderType", "other" },
+        { "vnp_ReturnUrl", returnUrl },
+        { "vnp_ExpireDate", expireDate }
+    };
+
+            // Xây dựng chuỗi dữ liệu để tính checksum theo quy tắc:
+            // data = vnp_RequestId + "|" + vnp_Version + "|" + vnp_Command + "|" + vnp_TmnCode + "|" + vnp_TxnRef + "|" + vnp_TransactionDate + "|" + vnp_CreateDate + "|" + vnp_IpAddr + "|" + vnp_OrderInfo;
+            string hashData = string.Join("|", new string[]
+            {
+        vnpParams["vnp_RequestId"],
+        vnpParams["vnp_Version"],
+        vnpParams["vnp_Command"],
+        vnpParams["vnp_TmnCode"],
+        vnpParams["vnp_TxnRef"],
+        vnpParams["vnp_TransactionDate"],
+        vnpParams["vnp_CreateDate"],
+        vnpParams["vnp_IpAddr"],
+        vnpParams["vnp_OrderInfo"]
+            });
+
+            // Tính secure hash sử dụng HMAC SHA512
+            string secureHash = VnpayHelper.ComputeHmacSHA512(vnp_HashSecret, hashData);
+
+            // Để tạo URL chuyển hướng, chúng ta sẽ sắp xếp các tham số theo thứ tự ASCII và URL-encode các giá trị
+            var sortedParams = vnpParams.OrderBy(p => p.Key, StringComparer.Ordinal);
+            string queryString = string.Join("&", sortedParams.Select(p => $"{p.Key}={Uri.EscapeDataString(p.Value.Trim())}"));
+            queryString += $"&vnp_SecureHash={secureHash}";
+
+            string paymentUrl = $"{vnp_Url}?{queryString}";
+
+            _logger.LogInformation("VNPay Payment URL: {PaymentUrl}", paymentUrl);
+            return Redirect(paymentUrl);
+        }
+
+
+
+
+
+
+        // GET: /Account/VnpayReturn?planId=...
+        [HttpGet]
+        public IActionResult VnpayReturn(int planId)
+        {
+            var vnpayResponse = Request.Query;
+            string vnp_SecureHashReceived = vnpayResponse["vnp_SecureHash"];
+
+            // Loại bỏ các tham số không dùng để tính hash
+            SortedList<string, string> vnpParams = new SortedList<string, string>();
+            foreach (var key in vnpayResponse.Keys)
+            {
+                if (key.StartsWith("vnp_") && key != "vnp_SecureHash" && key != "vnp_SecureHashType")
+                {
+                    vnpParams.Add(key, vnpayResponse[key]);
+                }
+            }
+
+            // Lấy cấu hình VNPay
+            var config = HttpContext.RequestServices.GetService(typeof(Microsoft.Extensions.Configuration.IConfiguration)) as Microsoft.Extensions.Configuration.IConfiguration;
+            string vnp_HashSecret = config["VnpaySettings:HashSecret"];
+
+            string hashData = string.Join("&", vnpParams.Select(kvp => $"{kvp.Key}={kvp.Value}"));
+            string computedHash = VnpayHelper.ComputeHmacSHA512(vnp_HashSecret, hashData);
+
+            if (!computedHash.Equals(vnp_SecureHashReceived, StringComparison.InvariantCultureIgnoreCase))
+            {
+                TempData["ErrorMessage"] = "Invalid signature. Payment might be tampered.";
+                return RedirectToAction("UpgradeMembership");
+            }
+
+            if (vnpParams.ContainsKey("vnp_ResponseCode") && vnpParams["vnp_ResponseCode"] == "00")
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                var user = _context.Users.Find(userId);
+                if (user != null)
+                {
+                    DateTime now = DateTime.Now;
+                    DateTime startDate = (user.MembershipType == "Premium" && user.MembershipExpiry.HasValue && user.MembershipExpiry.Value > now)
+                                         ? user.MembershipExpiry.Value : now;
+                    var plan = _context.SubscriptionPlans.FirstOrDefault(p => p.PlanId == planId && p.IsActive);
+                    DateTime endDate = startDate.AddDays(plan.DurationInDays);
+
+                    user.MembershipType = "Premium";
+                    user.MembershipExpiry = endDate;
+                    user.UpdatedAt = now;
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
+
+                    var subscription = new Subscription
+                    {
+                        UserId = user.UserId,
+                        PlanId = plan.PlanId,
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        PaymentStatus = "Paid",
+                        CreatedAt = now
+                    };
+                    _context.Subscriptions.Add(subscription);
+                    _context.SaveChanges();
+
+                    HttpContext.Session.SetString("MembershipType", "Premium");
+
+                    TempData["SuccessMessage"] = "Your payment was successful and membership has been updated.";
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Payment was unsuccessful or cancelled.";
+            }
+
+            return RedirectToAction("UpgradeSuccess", new { planId = planId });
         }
 
 

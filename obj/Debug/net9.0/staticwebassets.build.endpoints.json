@@ -1,0 +1,304 @@
+{
+  "Version": 1,
+  "ManifestType": "Build",
+  "Endpoints": [
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css",
+      "AssetFile": "JamesThewProject.styles.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css",
+      "AssetFile": "JamesThewProject.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.n9p445r2us.styles.css.gz",
+      "AssetFile": "JamesThewProject.styles.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n9p445r2us"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        },
+        {
+          "Name": "label",
+          "Value": "JamesThewProject.styles.css.gz"
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css",
+      "AssetFile": "JamesThewProject.styles.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css",
+      "AssetFile": "JamesThewProject.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Fb+voav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="
+        }
+      ]
+    },
+    {
+      "Route": "JamesThewProject.styles.css.gz",
+      "AssetFile": "JamesThewProject.styles.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 09 Mar 2025 04:02:48 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rolHIMUsI1mYCI68Y7b5ecu/DO48v0sfcajrBQPqMqI="
+        }
+      ]
+    }
+  ]
+}

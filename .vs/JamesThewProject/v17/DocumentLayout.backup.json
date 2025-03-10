@@ -1,0 +1,274 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\DOANKY3\\GIP\\project3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\views\\account\\subscriptionhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:views\\account\\subscriptionhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\views\\account\\upgrademembership.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:views\\account\\upgrademembership.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\helpers\\vnpayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:helpers\\vnpayhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\views\\account\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:views\\account\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\models\\submissionrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:models\\submissionrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\models\\managecontestsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:models\\managecontestsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\models\\subscriptionplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:models\\subscriptionplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\views\\account\\upgradesuccess.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:views\\account\\upgradesuccess.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|d:\\doanky3\\gip\\project3\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E8220C8-EA23-4F2E-A37C-AFD2A5EBC2CA}|JamesThewProject.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 12,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SubscriptionPlan.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Models\\SubscriptionPlan.cs",
+              "RelativeDocumentMoniker": "Models\\SubscriptionPlan.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Models\\SubscriptionPlan.cs",
+              "RelativeToolTip": "Models\\SubscriptionPlan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:49:48.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Subscription.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Models\\Subscription.cs",
+              "RelativeDocumentMoniker": "Models\\Subscription.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Models\\Subscription.cs",
+              "RelativeToolTip": "Models\\Subscription.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:49:34.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UpgradeMembership.cshtml",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\UpgradeMembership.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\UpgradeMembership.cshtml",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\UpgradeMembership.cshtml",
+              "RelativeToolTip": "Views\\Account\\UpgradeMembership.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABwAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-09T03:38:09.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SubscriptionHistory.cshtml",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\SubscriptionHistory.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\SubscriptionHistory.cshtml",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\SubscriptionHistory.cshtml",
+              "RelativeToolTip": "Views\\Account\\SubscriptionHistory.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAAYwCMAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-09T03:38:03.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Payment.cshtml",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\Payment.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Payment.cshtml",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\Payment.cshtml",
+              "RelativeToolTip": "Views\\Account\\Payment.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAMIAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-09T03:37:51.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAkwCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T03:23:38.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwDYAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T03:18:48.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VnpayHelper.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Helpers\\VnpayHelper.cs",
+              "RelativeDocumentMoniker": "Helpers\\VnpayHelper.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Helpers\\VnpayHelper.cs",
+              "RelativeToolTip": "Helpers\\VnpayHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T03:48:12.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBkAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T03:22:49.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-09T05:54:49.787Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ManageContestsViewModel.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Models\\ManageContestsViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\ManageContestsViewModel.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Models\\ManageContestsViewModel.cs",
+              "RelativeToolTip": "Models\\ManageContestsViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:10:49.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SubmissionRecipeViewModel.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Models\\SubmissionRecipeViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\SubmissionRecipeViewModel.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Models\\SubmissionRecipeViewModel.cs",
+              "RelativeToolTip": "Models\\SubmissionRecipeViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:10:44.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UpgradeSuccess.cshtml",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\UpgradeSuccess.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\UpgradeSuccess.cshtml",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Views\\Account\\UpgradeSuccess.cshtml",
+              "RelativeToolTip": "Views\\Account\\UpgradeSuccess.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-09T03:38:16.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\DOANKY3\\GIP\\project3\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\DOANKY3\\GIP\\project3\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAuwGAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T03:23:10.005Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

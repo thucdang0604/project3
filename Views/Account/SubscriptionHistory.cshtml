@@ -5,68 +5,49 @@
 }
 
 <div class="container mt-4 subscription-container">
-    <h2 class="section-title">Subscription History</h2>
-    @if (Model.Subscriptions.Any())
-    {
-        <table class="table table-bordered subscription-table">
-            <thead>
+    <h2>Subscription History</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Plan</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subscription in Model.Subscriptions)
+            {
                 <tr>
-                    <th>Plan Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Duration (Days)</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <td>@subscription.Plan.PlanName</td>
+                    <td>@subscription.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@subscription.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>@subscription.PaymentStatus</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var sub in Model.Subscriptions)
-                {
-                    <tr>
-                        <td>@sub.Plan.PlanName</td>
-                        <td>@sub.Plan.Description</td>
-                        <td>@sub.Plan.Price.ToString("C")</td>
-                        <td>@sub.Plan.DurationInDays</td>
-                        <td>@sub.StartDate.ToString("dd/MM/yyyy HH:mm")</td>
-                        <td>@sub.EndDate.ToString("dd/MM/yyyy HH:mm")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p class="no-data">No subscription history found.</p>
-    }
-
+            }
+        </tbody>
+    </table>
+   
     <hr />
 
     <h2 class="section-title">Available Subscription Plans</h2>
-    @if (Model.Plans.Any())
+    @foreach (var plan in Model.Plans)
     {
-        <div class="row">
-            @foreach (var plan in Model.Plans)
-            {
-                <div class="col-md-4">
-                    <div class="card plan-card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">@plan.PlanName</h5>
-                            <p class="card-text">@plan.Description</p>
-                            <p class="card-text"><strong>Price:</strong> @plan.Price.ToString("C")</p>
-                            <p class="card-text"><strong>Duration:</strong> @plan.DurationInDays days</p>
-                            <p class="card-text"><strong>Status:</strong> @(plan.IsActive ? "Active" : "Inactive")</p>
-                            <a href='@Url.Action("Payment", "Account", new { planId = plan.PlanId })' class="btn btn-upgrade">Upgrade</a>
-                        </div>
-                    </div>
+        <div class="col-md-4">
+            <div class="card plan-card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@plan.PlanName</h5>
+                    <p class="card-text">@plan.Description</p>
+                    <p class="card-text"><strong>Price:</strong> @plan.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+                    <p class="card-text"><strong>Duration:</strong> @plan.DurationInDays days</p>
+                    <p class="card-text"><strong>Status:</strong> @(plan.IsActive ? "Active" : "Inactive")</p>
+                    <!-- Liên kết chuyển trực tiếp đến VNPay Payment -->
+                    <a href='@Url.Action("VnpayPayment", "Account", new { planId = plan.PlanId })' class="btn btn-upgrade">Upgrade</a>
                 </div>
-            }
+            </div>
         </div>
     }
-    else
-    {
-        <p class="no-data">No subscription plans available at the moment.</p>
-    }
-</div>
+
 
 <style>
     /* Container chính */

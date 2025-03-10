@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/JamesThewProject/JamesThewProject.bundle.scp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\JamesThewProject.n9p445r2us.bundle.scp.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Fb\u002Bvoav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1850"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Fb\u002Bvoav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\u0022"},{"Name":"Last-Modified","Value":"Sun, 09 Mar 2025 04:02:48 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/JamesThewProject/JamesThewProject.n9p445r2us.bundle.scp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\JamesThewProject.n9p445r2us.bundle.scp.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"n9p445r2us"},{"Name":"integrity","Value":"sha256-Fb\u002Bvoav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4="},{"Name":"label","Value":"_content/JamesThewProject/JamesThewProject.bundle.scp.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1850"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Fb\u002Bvoav3p/7QbFDe2xG1uMOM7jbkQN9vmkOyZJdt5D4=\u0022"},{"Name":"Last-Modified","Value":"Sun, 09 Mar 2025 04:02:48 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
